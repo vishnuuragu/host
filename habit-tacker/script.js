@@ -39,13 +39,23 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Add new habit
-    addHabitBtn.addEventListener('click', () => {
+    function addHabit() {
         const habitName = habitInput.value.trim();
         if (habitName) {
             habits.push({ name: habitName, completed: false });
             habitInput.value = '';
             saveHabits();
             renderHabits();
+        }
+    }
+
+    // Add habit on button click
+    addHabitBtn.addEventListener('click', addHabit);
+
+    // Add habit on pressing Enter key
+    habitInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            addHabit();
         }
     });
 
