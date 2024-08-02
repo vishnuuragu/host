@@ -35,7 +35,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.3s, box-shadow 0.3s;
     text-decoration: none;
     color: inherit;
     display: block;
@@ -43,7 +43,10 @@ body {
 
 .card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2),
+                0 0 15px rgba(255, 0, 255, 0.6), /* Magenta glow */
+                0 0 20px rgba(0, 255, 255, 0.6), /* Cyan glow */
+                0 0 30px rgba(255, 0, 255, 0.6); /* Additional glow for depth */
 }
 
 .card h2 {
