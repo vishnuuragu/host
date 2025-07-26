@@ -1,0 +1,372 @@
+body {
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+    color: #333;
+    min-height: 100vh;
+}
+
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #4A90E2;
+}
+
+h2, h3 {
+    color: #4A90E2;
+    margin-bottom: 20px;
+}
+
+/* Discovery Section */
+.discovery-section {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.preferences {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    align-items: end;
+}
+
+.preference-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.preference-group label {
+    font-weight: 600;
+    color: #333;
+}
+
+.preference-group select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    background: white;
+}
+
+.action-btn {
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.action-btn:hover {
+    background-color: #357ABD;
+}
+
+/* Recommendations Section */
+.recommendations-section {
+    margin-bottom: 40px;
+}
+
+#recommendations-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.song-card {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #4A90E2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.song-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.song-info h4 {
+    margin: 0 0 8px 0;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.song-info .artist {
+    margin: 0 0 5px 0;
+    color: #666;
+    font-weight: 600;
+}
+
+.song-info .album {
+    margin: 0 0 10px 0;
+    color: #888;
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+.song-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.song-tags span {
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.genre-tag {
+    background: #d4edda;
+    color: #155724;
+}
+
+.mood-tag {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.era-tag {
+    background: #cce5ff;
+    color: #004085;
+}
+
+.song-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.like-btn,
+.add-to-playlist-btn {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.like-btn:hover,
+.add-to-playlist-btn:hover {
+    border-color: #4A90E2;
+    background: #f0f8ff;
+}
+
+.like-btn.liked {
+    border-color: #e74c3c;
+    background: #ffeaea;
+}
+
+/* Playlist Section */
+.playlist-section {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.playlist-controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.playlist-controls input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+#playlists-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.playlist-card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.playlist-info h4 {
+    margin: 0 0 5px 0;
+    color: #333;
+}
+
+.playlist-info p {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.created-date {
+    font-size: 0.8rem !important;
+    color: #888 !important;
+}
+
+.playlist-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.view-playlist-btn,
+.delete-playlist-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.view-playlist-btn {
+    background-color: #4A90E2;
+    color: white;
+}
+
+.view-playlist-btn:hover {
+    background-color: #357ABD;
+}
+
+.delete-playlist-btn {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.delete-playlist-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Favorites Section */
+.favorites-section {
+    margin-bottom: 30px;
+}
+
+#favorites-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+}
+
+.favorite-song {
+    position: relative;
+    border-left-color: #e74c3c !important;
+}
+
+.remove-favorite-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(231, 76, 60, 0.1);
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+}
+
+.remove-favorite-btn:hover {
+    background: rgba(231, 76, 60, 0.2);
+}
+
+/* Empty State Messages */
+.no-recommendations,
+.no-playlists,
+.no-favorites {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    padding: 40px;
+    grid-column: 1 / -1;
+}
+
+.back-link {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    text-decoration: none;
+    color: white;
+    background-color: #4A90E2;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.back-link:hover {
+    background-color: #357ABD;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    .preferences {
+        grid-template-columns: 1fr;
+    }
+    
+    .playlist-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .song-card {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+    
+    .song-actions {
+        flex-direction: row;
+        justify-content: center;
+    }
+    
+    .playlist-card {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+    
+    .playlist-actions {
+        justify-content: center;
+    }
+}

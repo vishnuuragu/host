@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <a href="../index.html" class="back-link">Back to Home</a>
+    <div class="container">
+        <h1>Budget Tracker</h1>
+        
+        <div class="summary">
+            <div class="summary-item income">
+                <h3>Total Income</h3>
+                <p id="total-income">$0.00</p>
+            </div>
+            <div class="summary-item expense">
+                <h3>Total Expenses</h3>
+                <p id="total-expenses">$0.00</p>
+            </div>
+            <div class="summary-item balance">
+                <h3>Balance</h3>
+                <p id="balance">$0.00</p>
+            </div>
+        </div>
+
+        <div class="transaction-form">
+            <input type="text" id="description-input" placeholder="Description" />
+            <input type="number" id="amount-input" placeholder="Amount" step="0.01" />
+            <select id="type-select">
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
+            </select>
+            <select id="category-select">
+                <option value="food">Food</option>
+                <option value="transport">Transport</option>
+                <option value="entertainment">Entertainment</option>
+                <option value="utilities">Utilities</option>
+                <option value="salary">Salary</option>
+                <option value="other">Other</option>
+            </select>
+            <button id="add-transaction-btn">Add Transaction</button>
+        </div>
+
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="income">Income</button>
+            <button class="filter-btn" data-filter="expense">Expenses</button>
+        </div>
+
+        <div class="transactions-container">
+            <h3>Recent Transactions</h3>
+            <ul id="transactions-list">
+                <!-- Transactions will be dynamically added here -->
+            </ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

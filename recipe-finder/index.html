@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Finder</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <a href="../index.html" class="back-link">Back to Home</a>
+    <div class="container">
+        <h1>Recipe Finder</h1>
+        
+        <div class="search-section">
+            <div class="ingredients-input">
+                <h3>What ingredients do you have?</h3>
+                <input type="text" id="ingredient-input" placeholder="Add an ingredient and press Enter" />
+                <div id="ingredients-list"></div>
+            </div>
+            
+            <div class="filters">
+                <select id="cuisine-filter">
+                    <option value="">Any Cuisine</option>
+                    <option value="italian">Italian</option>
+                    <option value="mexican">Mexican</option>
+                    <option value="chinese">Chinese</option>
+                    <option value="indian">Indian</option>
+                    <option value="american">American</option>
+                </select>
+                
+                <select id="meal-type-filter">
+                    <option value="">Any Meal</option>
+                    <option value="breakfast">Breakfast</option>
+                    <option value="lunch">Lunch</option>
+                    <option value="dinner">Dinner</option>
+                    <option value="snack">Snack</option>
+                    <option value="dessert">Dessert</option>
+                </select>
+                
+                <button id="find-recipes-btn">Find Recipes</button>
+            </div>
+        </div>
+
+        <div class="recipes-section">
+            <h3>Recipe Suggestions</h3>
+            <div id="recipes-container">
+                <p class="no-recipes">Add some ingredients and click "Find Recipes" to discover delicious recipes!</p>
+            </div>
+        </div>
+
+        <div class="saved-recipes">
+            <h3>Saved Recipes</h3>
+            <div id="saved-recipes-list"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

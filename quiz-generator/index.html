@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <a href="../index.html" class="back-link">Back to Home</a>
+    <div class="container">
+        <h1>Quiz Generator</h1>
+        
+        <div class="mode-selector">
+            <button id="create-mode-btn" class="mode-btn active">Create Quiz</button>
+            <button id="take-mode-btn" class="mode-btn">Take Quiz</button>
+        </div>
+
+        <!-- Create Quiz Mode -->
+        <div id="create-mode" class="mode-section">
+            <div class="quiz-info">
+                <input type="text" id="quiz-title" placeholder="Quiz Title" />
+                <textarea id="quiz-description" placeholder="Quiz Description (optional)"></textarea>
+            </div>
+            
+            <div class="question-form">
+                <h3>Add Question</h3>
+                <input type="text" id="question-input" placeholder="Enter your question" />
+                <div class="answers-section">
+                    <input type="text" id="answer1" placeholder="Answer 1" />
+                    <input type="text" id="answer2" placeholder="Answer 2" />
+                    <input type="text" id="answer3" placeholder="Answer 3" />
+                    <input type="text" id="answer4" placeholder="Answer 4" />
+                </div>
+                <div class="correct-answer">
+                    <label>Correct Answer:</label>
+                    <select id="correct-answer-select">
+                        <option value="0">Answer 1</option>
+                        <option value="1">Answer 2</option>
+                        <option value="2">Answer 3</option>
+                        <option value="3">Answer 4</option>
+                    </select>
+                </div>
+                <button id="add-question-btn">Add Question</button>
+            </div>
+
+            <div class="questions-preview">
+                <h3>Questions Preview</h3>
+                <div id="questions-list"></div>
+                <button id="save-quiz-btn" style="display: none;">Save Quiz</button>
+            </div>
+        </div>
+
+        <!-- Take Quiz Mode -->
+        <div id="take-mode" class="mode-section" style="display: none;">
+            <div class="quiz-selector">
+                <h3>Select a Quiz</h3>
+                <select id="quiz-select">
+                    <option value="">Choose a quiz...</option>
+                </select>
+                <button id="start-quiz-btn">Start Quiz</button>
+            </div>
+
+            <div id="quiz-container" style="display: none;">
+                <div class="quiz-header">
+                    <h2 id="current-quiz-title"></h2>
+                    <div class="progress">
+                        <span id="question-counter">1 / 5</span>
+                        <div class="progress-bar">
+                            <div id="progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <h3 id="current-question"></h3>
+                    <div id="answers-container"></div>
+                    <button id="next-question-btn" style="display: none;">Next Question</button>
+                </div>
+            </div>
+
+            <div id="results-container" style="display: none;">
+                <h2>Quiz Results</h2>
+                <div class="score-display">
+                    <div class="score-circle">
+                        <span id="score-percentage">0%</span>
+                    </div>
+                    <p id="score-text">You scored 0 out of 0</p>
+                </div>
+                <button id="restart-quiz-btn">Take Another Quiz</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
