@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Planner</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <a href="../index.html" class="back-link">Back to Home</a>
+    <div class="container">
+        <h1>Fitness Planner</h1>
+        
+        <div class="planner-sections">
+            <div class="workout-creation">
+                <h2>Create Workout Plan</h2>
+                
+                <div class="workout-form">
+                    <input type="text" id="workout-name" placeholder="Workout Plan Name" />
+                    <select id="workout-type">
+                        <option value="strength">Strength Training</option>
+                        <option value="cardio">Cardio</option>
+                        <option value="flexibility">Flexibility</option>
+                        <option value="mixed">Mixed</option>
+                    </select>
+                    <select id="difficulty-level">
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                    </select>
+                </div>
+
+                <div class="exercise-section">
+                    <h3>Add Exercises</h3>
+                    <div id="exercises-list"></div>
+                    <button id="add-exercise-btn" class="add-btn">+ Add Exercise</button>
+                </div>
+
+                <div class="workout-actions">
+                    <button id="save-workout-btn" class="action-btn">Save Workout Plan</button>
+                    <button id="clear-workout-btn" class="action-btn secondary">Clear All</button>
+                </div>
+            </div>
+
+            <div class="workout-library">
+                <h2>My Workout Plans</h2>
+                <div id="saved-workouts">
+                    <p class="no-workouts">No workout plans saved yet.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-section">
+            <h2>Workout Progress</h2>
+            <div class="progress-controls">
+                <select id="workout-select">
+                    <option value="">Select a workout plan...</option>
+                </select>
+                <button id="start-workout-btn" class="action-btn">Start Workout</button>
+            </div>
+            
+            <div id="active-workout" style="display: none;">
+                <div class="workout-header">
+                    <h3 id="current-workout-name"></h3>
+                    <div class="workout-timer">
+                        <span id="timer-display">00:00</span>
+                        <button id="pause-resume-btn">Pause</button>
+                        <button id="stop-workout-btn">Stop</button>
+                    </div>
+                </div>
+                
+                <div class="current-exercise">
+                    <h4>Current Exercise: <span id="current-exercise-name"></span></h4>
+                    <div class="exercise-progress">
+                        <span id="exercise-counter">1 / 5</span>
+                        <div class="progress-bar">
+                            <div id="exercise-progress-fill"></div>
+                        </div>
+                    </div>
+                    <div id="current-exercise-details"></div>
+                    <button id="next-exercise-btn" class="action-btn">Complete Exercise</button>
+                </div>
+            </div>
+
+            <div id="workout-complete" style="display: none;">
+                <h3>Workout Complete! 🎉</h3>
+                <div class="completion-stats">
+                    <p>Duration: <span id="final-duration"></span></p>
+                    <p>Exercises completed: <span id="exercises-completed"></span></p>
+                </div>
+                <button id="finish-workout-btn" class="action-btn">Finish & Save Progress</button>
+            </div>
+        </div>
+
+        <div class="workout-history">
+            <h3>Workout History</h3>
+            <div id="history-list"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
