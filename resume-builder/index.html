@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <a href="../index.html" class="back-link">Back to Home</a>
+    <div class="container">
+        <h1>Resume Builder</h1>
+        
+        <div class="resume-builder">
+            <div class="form-section">
+                <h2>Build Your Resume</h2>
+                
+                <!-- Personal Information -->
+                <div class="section">
+                    <h3>Personal Information</h3>
+                    <div class="form-row">
+                        <input type="text" id="full-name" placeholder="Full Name" />
+                        <input type="email" id="email" placeholder="Email" />
+                    </div>
+                    <div class="form-row">
+                        <input type="tel" id="phone" placeholder="Phone Number" />
+                        <input type="text" id="location" placeholder="Location" />
+                    </div>
+                    <textarea id="summary" placeholder="Professional Summary"></textarea>
+                </div>
+
+                <!-- Experience -->
+                <div class="section">
+                    <h3>Work Experience</h3>
+                    <div id="experience-list"></div>
+                    <button id="add-experience" class="add-btn">+ Add Experience</button>
+                </div>
+
+                <!-- Education -->
+                <div class="section">
+                    <h3>Education</h3>
+                    <div id="education-list"></div>
+                    <button id="add-education" class="add-btn">+ Add Education</button>
+                </div>
+
+                <!-- Skills -->
+                <div class="section">
+                    <h3>Skills</h3>
+                    <input type="text" id="skill-input" placeholder="Enter a skill and press Enter" />
+                    <div id="skills-list"></div>
+                </div>
+
+                <div class="actions">
+                    <button id="preview-btn" class="action-btn">Preview Resume</button>
+                    <button id="download-btn" class="action-btn">Download PDF</button>
+                    <button id="save-btn" class="action-btn">Save Resume</button>
+                </div>
+            </div>
+
+            <div class="preview-section">
+                <h2>Resume Preview</h2>
+                <div id="resume-preview">
+                    <div class="resume-header">
+                        <h1 id="preview-name">Your Name</h1>
+                        <div class="contact-info">
+                            <span id="preview-email">email@example.com</span>
+                            <span id="preview-phone">+1 (555) 123-4567</span>
+                            <span id="preview-location">City, State</span>
+                        </div>
+                    </div>
+
+                    <div class="resume-section">
+                        <h2>Professional Summary</h2>
+                        <p id="preview-summary">Your professional summary will appear here...</p>
+                    </div>
+
+                    <div class="resume-section">
+                        <h2>Work Experience</h2>
+                        <div id="preview-experience"></div>
+                    </div>
+
+                    <div class="resume-section">
+                        <h2>Education</h2>
+                        <div id="preview-education"></div>
+                    </div>
+
+                    <div class="resume-section">
+                        <h2>Skills</h2>
+                        <div id="preview-skills"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="saved-resumes">
+            <h3>Saved Resumes</h3>
+            <div id="saved-list"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

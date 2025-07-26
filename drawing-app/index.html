@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drawing App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <a href="../index.html" class="back-link">Back to Home</a>
+    <div class="container">
+        <h1>Drawing App</h1>
+        
+        <div class="toolbar">
+            <div class="tool-group">
+                <label>Brush Size:</label>
+                <input type="range" id="brush-size" min="1" max="50" value="5">
+                <span id="brush-size-value">5px</span>
+            </div>
+            
+            <div class="tool-group">
+                <label>Color:</label>
+                <input type="color" id="color-picker" value="#000000">
+            </div>
+            
+            <div class="tool-group">
+                <button id="eraser-btn" class="tool-btn">Eraser</button>
+                <button id="pen-btn" class="tool-btn active">Pen</button>
+            </div>
+            
+            <div class="tool-group">
+                <button id="clear-btn" class="action-btn">Clear Canvas</button>
+                <button id="save-btn" class="action-btn">Save Drawing</button>
+            </div>
+        </div>
+
+        <div class="canvas-container">
+            <canvas id="drawing-canvas"></canvas>
+        </div>
+
+        <div class="saved-drawings">
+            <h3>Saved Drawings</h3>
+            <div id="saved-list">
+                <!-- Saved drawings will appear here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
