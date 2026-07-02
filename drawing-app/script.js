@@ -1,3 +1,19 @@
+// Read a JSON value from localStorage, falling back if missing or corrupted
+function loadJSON(key, fallback) {
+    try {
+        return JSON.parse(localStorage.getItem(key)) ?? fallback;
+    } catch (e) {
+        return fallback;
+    }
+}
+
+// Escape user-provided text before inserting it into innerHTML
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, ch => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
+    ));
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const canvas = document.getElementById('drawing-canvas');
     const ctx = canvas.getContext('2d');
@@ -32,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentBrushSize = 5;
 
     // Load saved drawings
-    let savedDrawings = JSON.parse(localStorage.getItem('drawings')) || [];
+    let savedDrawings = loadJSON('drawings', []);
 
     // Update brush size display
     brushSizeSlider.addEventListener('input', (e) => {

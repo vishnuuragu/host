@@ -1,10 +1,26 @@
+// Read a JSON value from localStorage, falling back if missing or corrupted
+function loadJSON(key, fallback) {
+    try {
+        return JSON.parse(localStorage.getItem(key)) ?? fallback;
+    } catch (e) {
+        return fallback;
+    }
+}
+
+// Escape user-provided text before inserting it into innerHTML
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, ch => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
+    ));
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const habitInput = document.getElementById('habit-input');
     const addHabitBtn = document.getElementById('add-habit-btn');
     const habitList = document.getElementById('habit-list');
 
     // Load habits from local storage
-    let habits = JSON.parse(localStorage.getItem('habits')) || [];
+    let habits = loadJSON('habits', []);
 
     // Render habits
     function renderHabits() {
@@ -17,13 +33,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             habitItem.innerHTML = `
-                <span>${habit.name}</span>
+                <span>${escapeHTML(habit.name)}</span>
                 <div>
                     <button class="remove-btn" data-index="${index}">Remove</button>
                 </div>
             `;
 
-            habitItem.addEventListener('click', () => {
+            habitItem.addEventListener('click', (e) => {
+                // Ignore clicks on the Remove button; those are handled separately
+                if (e.target.classList.contains('remove-btn')) return;
                 habit.completed = !habit.completed;
                 saveHabits();
                 renderHabits();

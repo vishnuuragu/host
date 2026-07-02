@@ -1,3 +1,19 @@
+// Read a JSON value from localStorage, falling back if missing or corrupted
+function loadJSON(key, fallback) {
+    try {
+        return JSON.parse(localStorage.getItem(key)) ?? fallback;
+    } catch (e) {
+        return fallback;
+    }
+}
+
+// Escape user-provided text before inserting it into innerHTML
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, ch => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
+    ));
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Mode switching elements
     const createModeBtn = document.getElementById('create-mode-btn');
@@ -34,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const restartQuizBtn = document.getElementById('restart-quiz-btn');
 
     // Data
-    let quizzes = JSON.parse(localStorage.getItem('quizzes')) || [];
+    let quizzes = loadJSON('quizzes', []);
     let currentQuiz = null;
     let currentQuestionIndex = 0;
     let userAnswers = [];
@@ -102,10 +118,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const questionDiv = document.createElement('div');
             questionDiv.className = 'question-preview';
             questionDiv.innerHTML = `
-                <h4>${index + 1}. ${q.question}</h4>
+                <h4>${index + 1}. ${escapeHTML(q.question)}</h4>
                 <ul>
-                    ${q.answers.map((answer, i) => 
-                        `<li class="${i === q.correctAnswer ? 'correct' : ''}">${answer}</li>`
+                    ${q.answers.map((answer, i) =>
+                        `<li class="${i === q.correctAnswer ? 'correct' : ''}">${escapeHTML(answer)}</li>`
                     ).join('')}
                 </ul>
                 <button class="remove-question-btn" data-index="${index}">Remove</button>

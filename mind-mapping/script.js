@@ -1,3 +1,19 @@
+// Read a JSON value from localStorage, falling back if missing or corrupted
+function loadJSON(key, fallback) {
+    try {
+        return JSON.parse(localStorage.getItem(key)) ?? fallback;
+    } catch (e) {
+        return fallback;
+    }
+}
+
+// Escape user-provided text before inserting it into innerHTML
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, ch => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
+    ));
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const mapTitle = document.getElementById('map-title');
     const addNodeBtn = document.getElementById('add-node-btn');
@@ -15,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let nodes = [];
     let connections = [];
-    let savedMaps = JSON.parse(localStorage.getItem('mindMaps')) || [];
+    let savedMaps = loadJSON('mindMaps', []);
     let selectedNode = null;
     let draggedNode = null;
     let nodeIdCounter = 1;
@@ -298,7 +314,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             mapCard.innerHTML = `
                 <div class="map-info">
-                    <h4>${map.title}</h4>
+                    <h4>${escapeHTML(map.title)}</h4>
                     <div class="map-stats">
                         <span>${map.nodes.length} nodes</span>
                         <span>${map.connections.length} connections</span>

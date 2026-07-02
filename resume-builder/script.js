@@ -1,3 +1,19 @@
+// Read a JSON value from localStorage, falling back if missing or corrupted
+function loadJSON(key, fallback) {
+    try {
+        return JSON.parse(localStorage.getItem(key)) ?? fallback;
+    } catch (e) {
+        return fallback;
+    }
+}
+
+// Escape user-provided text before inserting it into innerHTML
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, ch => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
+    ));
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Form elements
     const fullNameInput = document.getElementById('full-name');
@@ -35,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let experiences = [];
     let educations = [];
     let skills = [];
-    let savedResumes = JSON.parse(localStorage.getItem('resumes')) || [];
+    let savedResumes = loadJSON('resumes', []);
 
     // Personal info event listeners
     fullNameInput.addEventListener('input', updatePreview);
@@ -147,8 +163,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const skillSpan = document.createElement('span');
             skillSpan.className = 'skill-tag';
             skillSpan.innerHTML = `
-                ${skill}
-                <button class="remove-skill" data-skill="${skill}">×</button>
+                ${escapeHTML(skill)}
+                <button class="remove-skill" data-skill="${escapeHTML(skill)}">×</button>
             `;
             skillsList.appendChild(skillSpan);
         });
@@ -180,11 +196,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 expDiv.className = 'experience-entry';
                 expDiv.innerHTML = `
                     <div class="exp-header">
-                        <h3>${exp.jobTitle || 'Job Title'}</h3>
-                        <span class="company">${exp.company || 'Company'}</span>
+                        <h3>${escapeHTML(exp.jobTitle || 'Job Title')}</h3>
+                        <span class="company">${escapeHTML(exp.company || 'Company')}</span>
                     </div>
-                    <div class="exp-dates">${exp.startDate || 'Start'} - ${exp.endDate || 'End'}</div>
-                    ${exp.description ? `<p class="exp-description">${exp.description}</p>` : ''}
+                    <div class="exp-dates">${escapeHTML(exp.startDate || 'Start')} - ${escapeHTML(exp.endDate || 'End')}</div>
+                    ${exp.description ? `<p class="exp-description">${escapeHTML(exp.description)}</p>` : ''}
                 `;
                 previewExperience.appendChild(expDiv);
             }
@@ -198,12 +214,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 eduDiv.className = 'education-entry';
                 eduDiv.innerHTML = `
                     <div class="edu-header">
-                        <h3>${edu.degree || 'Degree'}</h3>
-                        <span class="institution">${edu.institution || 'Institution'}</span>
+                        <h3>${escapeHTML(edu.degree || 'Degree')}</h3>
+                        <span class="institution">${escapeHTML(edu.institution || 'Institution')}</span>
                     </div>
                     <div class="edu-details">
-                        ${edu.year ? `<span class="year">${edu.year}</span>` : ''}
-                        ${edu.gpa ? `<span class="gpa">GPA: ${edu.gpa}</span>` : ''}
+                        ${edu.year ? `<span class="year">${escapeHTML(edu.year)}</span>` : ''}
+                        ${edu.gpa ? `<span class="gpa">GPA: ${escapeHTML(edu.gpa)}</span>` : ''}
                     </div>
                 `;
                 previewEducation.appendChild(eduDiv);
@@ -322,7 +338,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             resumeDiv.innerHTML = `
                 <div class="resume-info">
-                    <h4>${resume.personal.name || 'Untitled Resume'}</h4>
+                    <h4>${escapeHTML(resume.personal.name || 'Untitled Resume')}</h4>
                     <span class="timestamp">${resume.timestamp}</span>
                 </div>
                 <div class="resume-actions">

@@ -1,3 +1,19 @@
+// Read a JSON value from localStorage, falling back if missing or corrupted
+function loadJSON(key, fallback) {
+    try {
+        return JSON.parse(localStorage.getItem(key)) ?? fallback;
+    } catch (e) {
+        return fallback;
+    }
+}
+
+// Escape user-provided text before inserting it into innerHTML
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, ch => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
+    ));
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const ingredientInput = document.getElementById('ingredient-input');
     const ingredientsList = document.getElementById('ingredients-list');
@@ -8,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const savedRecipesList = document.getElementById('saved-recipes-list');
 
     let ingredients = [];
-    let savedRecipes = JSON.parse(localStorage.getItem('savedRecipes')) || [];
+    let savedRecipes = loadJSON('savedRecipes', []);
 
     // Sample recipe database
     const recipeDatabase = [
@@ -160,8 +176,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const ingredientTag = document.createElement('span');
             ingredientTag.className = 'ingredient-tag';
             ingredientTag.innerHTML = `
-                ${ingredient}
-                <button class="remove-ingredient" data-ingredient="${ingredient}">×</button>
+                ${escapeHTML(ingredient)}
+                <button class="remove-ingredient" data-ingredient="${escapeHTML(ingredient)}">×</button>
             `;
             ingredientsList.appendChild(ingredientTag);
         });

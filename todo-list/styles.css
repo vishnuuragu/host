@@ -87,6 +87,23 @@ h1 {
     color: white;
 }
 
+.clear-completed-btn {
+    padding: 8px 16px;
+    border: 2px solid #e74c3c;
+    background: white;
+    color: #e74c3c;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    margin-left: auto;
+}
+
+.clear-completed-btn:hover {
+    background: #e74c3c;
+    color: white;
+}
+
 #task-list {
     list-style: none;
     padding: 0;

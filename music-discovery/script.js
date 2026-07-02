@@ -1,3 +1,19 @@
+// Read a JSON value from localStorage, falling back if missing or corrupted
+function loadJSON(key, fallback) {
+    try {
+        return JSON.parse(localStorage.getItem(key)) ?? fallback;
+    } catch (e) {
+        return fallback;
+    }
+}
+
+// Escape user-provided text before inserting it into innerHTML
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, ch => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
+    ));
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const genreSelect = document.getElementById('genre-select');
     const moodSelect = document.getElementById('mood-select');
@@ -9,8 +25,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const playlistsList = document.getElementById('playlists-list');
     const favoritesList = document.getElementById('favorites-list');
 
-    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    let playlists = JSON.parse(localStorage.getItem('playlists')) || [];
+    let favorites = loadJSON('favorites', []);
+    let playlists = loadJSON('playlists', []);
 
     // Sample music database
     const musicDatabase = [
@@ -208,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             playlistCard.innerHTML = `
                 <div class="playlist-info">
-                    <h4>${playlist.name}</h4>
+                    <h4>${escapeHTML(playlist.name)}</h4>
                     <p>${playlist.songs.length} songs</p>
                     <p class="created-date">Created: ${playlist.created}</p>
                 </div>

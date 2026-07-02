@@ -1,3 +1,19 @@
+// Read a JSON value from localStorage, falling back if missing or corrupted
+function loadJSON(key, fallback) {
+    try {
+        return JSON.parse(localStorage.getItem(key)) ?? fallback;
+    } catch (e) {
+        return fallback;
+    }
+}
+
+// Escape user-provided text before inserting it into innerHTML
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, ch => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
+    ));
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const taskInput = document.getElementById('task-input');
     const prioritySelect = document.getElementById('priority-select');
@@ -6,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const filterBtns = document.querySelectorAll('.filter-btn');
 
     // Load tasks from local storage
-    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    let tasks = loadJSON('tasks', []);
     let currentFilter = 'all';
 
     // Render tasks
@@ -29,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
             taskItem.innerHTML = `
                 <div class="task-content">
                     <input type="checkbox" ${task.completed ? 'checked' : ''} data-index="${originalIndex}">
-                    <span class="task-text">${task.text}</span>
+                    <span class="task-text">${escapeHTML(task.text)}</span>
                     <span class="priority-badge ${task.priority}">${task.priority.toUpperCase()}</span>
                 </div>
                 <div class="task-actions">
@@ -100,6 +116,16 @@ document.addEventListener('DOMContentLoaded', function() {
             currentFilter = btn.dataset.filter;
             renderTasks();
         });
+    });
+
+    // Clear all completed tasks
+    document.getElementById('clear-completed-btn').addEventListener('click', () => {
+        if (!tasks.some(task => task.completed)) return;
+        if (confirm('Remove all completed tasks?')) {
+            tasks = tasks.filter(task => !task.completed);
+            saveTasks();
+            renderTasks();
+        }
     });
 
     // Add task on button click

@@ -1,3 +1,19 @@
+// Read a JSON value from localStorage, falling back if missing or corrupted
+function loadJSON(key, fallback) {
+    try {
+        return JSON.parse(localStorage.getItem(key)) ?? fallback;
+    } catch (e) {
+        return fallback;
+    }
+}
+
+// Escape user-provided text before inserting it into innerHTML
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, ch => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
+    ));
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const descriptionInput = document.getElementById('description-input');
     const amountInput = document.getElementById('amount-input');
@@ -12,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const balanceEl = document.getElementById('balance');
 
     // Load transactions from local storage
-    let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+    let transactions = loadJSON('transactions', []);
     let currentFilter = 'all';
 
     // Update summary
@@ -52,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 transactionItem.innerHTML = `
                     <div class="transaction-info">
-                        <div class="transaction-description">${transaction.description}</div>
+                        <div class="transaction-description">${escapeHTML(transaction.description)}</div>
                         <div class="transaction-details">
                             <span class="category">${transaction.category}</span>
                             <span class="date">${new Date(transaction.timestamp).toLocaleDateString()}</span>
@@ -118,6 +134,37 @@ document.addEventListener('DOMContentLoaded', function() {
             currentFilter = btn.dataset.filter;
             renderTransactions();
         });
+    });
+
+    // Export transactions as a CSV download
+    document.getElementById('export-csv-btn').addEventListener('click', () => {
+        if (transactions.length === 0) {
+            alert('No transactions to export yet.');
+            return;
+        }
+
+        const escapeCSV = value => `"${String(value).replace(/"/g, '""')}"`;
+        const rows = [
+            ['Date', 'Description', 'Category', 'Type', 'Amount'],
+            ...transactions
+                .slice()
+                .sort((a, b) => a.timestamp - b.timestamp)
+                .map(t => [
+                    new Date(t.timestamp).toLocaleDateString(),
+                    t.description,
+                    t.category,
+                    t.type,
+                    t.amount.toFixed(2)
+                ])
+        ];
+
+        const csv = rows.map(row => row.map(escapeCSV).join(',')).join('\n');
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'transactions.csv';
+        link.click();
+        URL.revokeObjectURL(link.href);
     });
 
     // Add transaction on button click

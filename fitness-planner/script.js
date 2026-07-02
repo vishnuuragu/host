@@ -1,3 +1,19 @@
+// Read a JSON value from localStorage, falling back if missing or corrupted
+function loadJSON(key, fallback) {
+    try {
+        return JSON.parse(localStorage.getItem(key)) ?? fallback;
+    } catch (e) {
+        return fallback;
+    }
+}
+
+// Escape user-provided text before inserting it into innerHTML
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, ch => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
+    ));
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Form elements
     const workoutName = document.getElementById('workout-name');
@@ -31,8 +47,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const historyList = document.getElementById('history-list');
 
     // Data storage
-    let workoutPlans = JSON.parse(localStorage.getItem('workoutPlans')) || [];
-    let workoutHistory = JSON.parse(localStorage.getItem('workoutHistory')) || [];
+    let workoutPlans = loadJSON('workoutPlans', []);
+    let workoutHistory = loadJSON('workoutHistory', []);
     let exercises = [];
     
     // Workout session data
@@ -210,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             workoutCard.innerHTML = `
                 <div class="workout-info">
-                    <h4>${workout.name}</h4>
+                    <h4>${escapeHTML(workout.name)}</h4>
                     <div class="workout-meta">
                         <span class="type">${workout.type}</span>
                         <span class="difficulty">${workout.difficulty}</span>
@@ -394,7 +410,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             historyItem.innerHTML = `
                 <div class="history-info">
-                    <h4>${entry.workoutName}</h4>
+                    <h4>${escapeHTML(entry.workoutName)}</h4>
                     <div class="history-details">
                         <span>Duration: ${minutes}m ${seconds}s</span>
                         <span>Exercises: ${entry.exercisesCompleted}</span>
