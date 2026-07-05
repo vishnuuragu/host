@@ -3,49 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mind Mapping Tool</title>
+    <meta name="description" content="Visualize ideas as draggable, connectable nodes — a self-contained vanilla JS module of interactive.os.">
+    <meta name="theme-color" content="#030409">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <title>Mind Mapping — interactive.os</title>
+    <script>document.documentElement.classList.add('js');</script>
+    <link rel="stylesheet" href="../shared/theme.css">
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body>
-    <a href="../index.html" class="back-link">Back to Home</a>
-    <div class="container">
-        <h1>Mind Mapping Tool</h1>
-        
-        <div class="toolbar">
-            <div class="map-controls">
-                <input type="text" id="map-title" placeholder="Mind Map Title" />
-                <button id="add-node-btn" class="tool-btn">Add Node</button>
-                <button id="clear-map-btn" class="tool-btn secondary">Clear Map</button>
-                <button id="save-map-btn" class="tool-btn">Save Map</button>
-            </div>
-            
-            <div class="node-controls" style="display: none;">
-                <input type="text" id="node-text" placeholder="Node text" />
-                <input type="color" id="node-color" value="#4A90E2" />
-                <button id="update-node-btn" class="tool-btn">Update Node</button>
-                <button id="delete-node-btn" class="tool-btn danger">Delete Node</button>
-                <button id="cancel-edit-btn" class="tool-btn secondary">Cancel</button>
-            </div>
-        </div>
+<body data-accent="magenta">
 
-        <div class="mind-map-container">
-            <div id="mind-map-canvas">
-                <div class="instructions">
-                    <p>Click "Add Node" to create your first node</p>
-                    <p>Click on nodes to edit them</p>
-                    <p>Drag nodes to reposition them</p>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="app-nav-wrap">
+        <nav class="app-nav" aria-label="Module">
+            <a href="../index.html" class="back-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m0 0 6 6m-6-6 6-6"/></svg>
+                <span>All modules</span>
+            </a>
+            <span class="app-nav-title">
+                <span class="glyph" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.6"/><circle cx="5" cy="6" r="1.8"/><circle cx="19" cy="7" r="1.8"/><circle cx="7" cy="19" r="1.8"/><path d="M10.2 10.4 6.4 7.1m7.5 3.5 3.5-2.7m-6.5 5.9-3.2 3.4"/></svg>
+                </span>
+                Mind Mapping
+            </span>
+            <span class="app-nav-meta" aria-hidden="true"><span class="pulse-dot"></span><span class="meta-extra">MODULE 07 / 10</span></span>
+        </nav>
+    </header>
+
+    <main class="app-main container" id="main">
+        <header class="app-head">
+            <p class="eyebrow"><span class="eyebrow-index">07</span> MODULE</p>
+            <h1>Mind <span class="holo">Mapping</span></h1>
+            <p class="app-sub">Drop nodes onto the canvas, drag them into place, and double-click two nodes to wire them together.</p>
+        </header>
+
+        <section class="panel toolbar-panel" data-reveal>
+            <div class="toolbar">
+                <div class="map-controls">
+                    <input type="text" id="map-title" placeholder="Mind map title…" aria-label="Mind map title" />
+                    <button id="add-node-btn" class="btn btn-primary btn-sm">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                        Add node
+                    </button>
+                    <button id="save-map-btn" class="btn btn-ghost btn-sm">Save map</button>
+                    <button id="clear-map-btn" class="btn btn-danger btn-sm">Clear</button>
+                </div>
+
+                <div class="node-controls" style="display: none;">
+                    <input type="text" id="node-text" placeholder="Node text…" aria-label="Node text" />
+                    <input type="color" id="node-color" value="#a78bfa" aria-label="Node color" />
+                    <button id="update-node-btn" class="btn btn-primary btn-sm">Update</button>
+                    <button id="delete-node-btn" class="btn btn-danger btn-sm">Delete</button>
+                    <button id="cancel-edit-btn" class="btn btn-ghost btn-sm">Cancel</button>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="saved-maps">
-            <h3>Saved Mind Maps</h3>
-            <div id="saved-maps-list">
-                <p class="no-maps">No saved mind maps yet.</p>
+        <section class="mind-map-container" data-reveal>
+            <div class="hud-corner hud-tl" aria-hidden="true"></div>
+            <div class="hud-corner hud-tr" aria-hidden="true"></div>
+            <div class="hud-corner hud-bl" aria-hidden="true"></div>
+            <div class="hud-corner hud-br" aria-hidden="true"></div>
+            <div id="mind-map-canvas">
+                <div class="instructions">
+                    <p>CLICK “ADD NODE” TO CREATE YOUR FIRST NODE</p>
+                    <p>CLICK A NODE TO EDIT · DRAG TO REPOSITION</p>
+                    <p>DOUBLE-CLICK TWO NODES TO CONNECT THEM</p>
+                </div>
             </div>
-        </div>
-    </div>
+        </section>
 
+        <section class="panel saved-maps" data-reveal>
+            <div class="panel-head">
+                <h3>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 4h11A1.5 1.5 0 0 1 19 5.5V21l-7-4-7 4V5.5A1.5 1.5 0 0 1 6.5 4Z"/></svg>
+                    Saved mind maps
+                </h3>
+            </div>
+            <div id="saved-maps-list">
+                <p class="no-maps">NO SAVED MIND MAPS YET</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-foot">INTERACTIVE.OS · LOCAL-FIRST · <a href="../index.html">RETURN TO HUB</a></footer>
+
+    <script src="../shared/theme.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

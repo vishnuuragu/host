@@ -3,21 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Budget Tracker</title>
+    <meta name="description" content="Track income and expenses with live totals and CSV export — a self-contained vanilla JS module of interactive.os.">
+    <meta name="theme-color" content="#030409">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <title>Budget Tracker — interactive.os</title>
+    <script>document.documentElement.classList.add('js');</script>
+    <link rel="stylesheet" href="../shared/theme.css">
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body>
-    <a href="../index.html" class="back-link">Back to Home</a>
-    <div class="container">
-        <h1>Budget Tracker</h1>
-        
-        <div class="summary">
+<body data-accent="cyan">
+
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="app-nav-wrap">
+        <nav class="app-nav" aria-label="Module">
+            <a href="../index.html" class="back-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m0 0 6 6m-6-6 6-6"/></svg>
+                <span>All modules</span>
+            </a>
+            <span class="app-nav-title">
+                <span class="glyph" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.5A2.5 2.5 0 0 1 6 5h11.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H6a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M20 10.5h-4.2a1.9 1.9 0 0 0 0 3.8H20"/></svg>
+                </span>
+                Budget Tracker
+            </span>
+            <span class="app-nav-meta" aria-hidden="true"><span class="pulse-dot"></span><span class="meta-extra">MODULE 09 / 10</span></span>
+        </nav>
+    </header>
+
+    <main class="app-main container" id="main">
+        <header class="app-head">
+            <p class="eyebrow"><span class="eyebrow-index">09</span> MODULE</p>
+            <h1>Budget <span class="holo">Tracker</span></h1>
+            <p class="app-sub">Log income and expenses, watch the balance update live, and export the ledger to CSV whenever you need it.</p>
+        </header>
+
+        <div class="summary" data-reveal>
             <div class="summary-item income">
-                <h3>Total Income</h3>
+                <h3>Total income</h3>
                 <p id="total-income">$0.00</p>
             </div>
             <div class="summary-item expense">
-                <h3>Total Expenses</h3>
+                <h3>Total expenses</h3>
                 <p id="total-expenses">$0.00</p>
             </div>
             <div class="summary-item balance">
@@ -26,41 +56,54 @@
             </div>
         </div>
 
-        <div class="transaction-form">
-            <input type="text" id="description-input" placeholder="Description" />
-            <input type="number" id="amount-input" placeholder="Amount" step="0.01" />
-            <select id="type-select">
-                <option value="income">Income</option>
-                <option value="expense">Expense</option>
-            </select>
-            <select id="category-select">
-                <option value="food">Food</option>
-                <option value="transport">Transport</option>
-                <option value="entertainment">Entertainment</option>
-                <option value="utilities">Utilities</option>
-                <option value="salary">Salary</option>
-                <option value="other">Other</option>
-            </select>
-            <button id="add-transaction-btn">Add Transaction</button>
-        </div>
-
-        <div class="filters">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="income">Income</button>
-            <button class="filter-btn" data-filter="expense">Expenses</button>
-        </div>
-
-        <div class="transactions-container">
-            <div class="transactions-header">
-                <h3>Recent Transactions</h3>
-                <button id="export-csv-btn" class="export-csv-btn">Export CSV</button>
+        <section class="panel" data-reveal>
+            <div class="transaction-form">
+                <input type="text" id="description-input" placeholder="Description…" aria-label="Description" />
+                <input type="number" id="amount-input" placeholder="Amount" step="0.01" min="0" inputmode="decimal" aria-label="Amount" />
+                <select id="type-select" aria-label="Type">
+                    <option value="income">Income</option>
+                    <option value="expense">Expense</option>
+                </select>
+                <select id="category-select" aria-label="Category">
+                    <option value="food">Food</option>
+                    <option value="transport">Transport</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="utilities">Utilities</option>
+                    <option value="salary">Salary</option>
+                    <option value="other">Other</option>
+                </select>
+                <button id="add-transaction-btn" class="btn btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                    Add
+                </button>
             </div>
-            <ul id="transactions-list">
-                <!-- Transactions will be dynamically added here -->
-            </ul>
-        </div>
-    </div>
+        </section>
 
+        <section class="panel transactions-container" data-reveal>
+            <div class="transactions-header">
+                <h3>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6.5h16M4 12h16M4 17.5h10"/></svg>
+                    Recent transactions
+                </h3>
+                <div class="transactions-tools">
+                    <div class="seg" role="group" aria-label="Filter transactions">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="income">Income</button>
+                        <button class="filter-btn" data-filter="expense">Expenses</button>
+                    </div>
+                    <button id="export-csv-btn" class="btn btn-ghost btn-sm export-csv-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12m0 0-4.5-4.5M12 16l4.5-4.5M4.5 20h15"/></svg>
+                        Export CSV
+                    </button>
+                </div>
+            </div>
+            <ul id="transactions-list"></ul>
+        </section>
+    </main>
+
+    <footer class="app-foot">INTERACTIVE.OS · LOCAL-FIRST · <a href="../index.html">RETURN TO HUB</a></footer>
+
+    <script src="../shared/theme.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

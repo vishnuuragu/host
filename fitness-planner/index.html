@@ -3,74 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fitness Planner</title>
+    <meta name="description" content="Create workout plans, run guided sessions with a timer, and log your history — a self-contained vanilla JS module of interactive.os.">
+    <meta name="theme-color" content="#030409">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <title>Fitness Planner — interactive.os</title>
+    <script>document.documentElement.classList.add('js');</script>
+    <link rel="stylesheet" href="../shared/theme.css">
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body>
-    <a href="../index.html" class="back-link">Back to Home</a>
-    <div class="container">
-        <h1>Fitness Planner</h1>
-        
+<body data-accent="teal">
+
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="app-nav-wrap">
+        <nav class="app-nav" aria-label="Module">
+            <a href="../index.html" class="back-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m0 0 6 6m-6-6 6-6"/></svg>
+                <span>All modules</span>
+            </a>
+            <span class="app-nav-title">
+                <span class="glyph" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 12h3l2.8-6.5 4 13 2.7-6.5h4.5"/></svg>
+                </span>
+                Fitness Planner
+            </span>
+            <span class="app-nav-meta" aria-hidden="true"><span class="pulse-dot"></span><span class="meta-extra">MODULE 04 / 10</span></span>
+        </nav>
+    </header>
+
+    <main class="app-main container" id="main">
+        <header class="app-head">
+            <p class="eyebrow"><span class="eyebrow-index">04</span> MODULE</p>
+            <h1>Fitness <span class="holo">Planner</span></h1>
+            <p class="app-sub">Design workout plans, run them against a live session timer, and keep a history of every completed workout.</p>
+        </header>
+
         <div class="planner-sections">
-            <div class="workout-creation">
-                <h2>Create Workout Plan</h2>
-                
+            <section class="panel workout-creation" data-reveal>
+                <div class="panel-head">
+                    <h2>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                        Create workout plan
+                    </h2>
+                </div>
+
                 <div class="workout-form">
-                    <input type="text" id="workout-name" placeholder="Workout Plan Name" />
-                    <select id="workout-type">
-                        <option value="strength">Strength Training</option>
-                        <option value="cardio">Cardio</option>
-                        <option value="flexibility">Flexibility</option>
-                        <option value="mixed">Mixed</option>
-                    </select>
-                    <select id="difficulty-level">
-                        <option value="beginner">Beginner</option>
-                        <option value="intermediate">Intermediate</option>
-                        <option value="advanced">Advanced</option>
-                    </select>
+                    <input type="text" id="workout-name" placeholder="Workout plan name…" aria-label="Workout plan name" />
+                    <div class="form-row-2">
+                        <select id="workout-type" aria-label="Workout type">
+                            <option value="strength">Strength Training</option>
+                            <option value="cardio">Cardio</option>
+                            <option value="flexibility">Flexibility</option>
+                            <option value="mixed">Mixed</option>
+                        </select>
+                        <select id="difficulty-level" aria-label="Difficulty">
+                            <option value="beginner">Beginner</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="exercise-section">
-                    <h3>Add Exercises</h3>
+                    <h3>Exercises</h3>
                     <div id="exercises-list"></div>
-                    <button id="add-exercise-btn" class="add-btn">+ Add Exercise</button>
+                    <button id="add-exercise-btn" class="btn btn-ghost add-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                        Add exercise
+                    </button>
                 </div>
 
                 <div class="workout-actions">
-                    <button id="save-workout-btn" class="action-btn">Save Workout Plan</button>
-                    <button id="clear-workout-btn" class="action-btn secondary">Clear All</button>
+                    <button id="save-workout-btn" class="btn btn-primary">Save workout plan</button>
+                    <button id="clear-workout-btn" class="btn btn-ghost">Clear all</button>
                 </div>
-            </div>
+            </section>
 
-            <div class="workout-library">
-                <h2>My Workout Plans</h2>
-                <div id="saved-workouts">
-                    <p class="no-workouts">No workout plans saved yet.</p>
+            <section class="panel workout-library" data-reveal>
+                <div class="panel-head">
+                    <h2>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V4H6.5A2.5 2.5 0 0 0 4 6.5v13Z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg>
+                        My workout plans
+                    </h2>
                 </div>
-            </div>
+                <div id="saved-workouts">
+                    <p class="no-workouts">NO WORKOUT PLANS SAVED YET</p>
+                </div>
+            </section>
         </div>
 
-        <div class="progress-section">
-            <h2>Workout Progress</h2>
-            <div class="progress-controls">
-                <select id="workout-select">
-                    <option value="">Select a workout plan...</option>
-                </select>
-                <button id="start-workout-btn" class="action-btn">Start Workout</button>
+        <section class="panel progress-section" data-reveal>
+            <div class="panel-head">
+                <h2>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 1.8"/></svg>
+                    Workout session
+                </h2>
+                <p>Select a saved plan and run it against the timer.</p>
             </div>
-            
+
+            <div class="progress-controls">
+                <select id="workout-select" aria-label="Select workout plan">
+                    <option value="">Select a workout plan…</option>
+                </select>
+                <button id="start-workout-btn" class="btn btn-primary">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.87l11-6.5a1 1 0 0 0 0-1.74l-11-6.5A1 1 0 0 0 8 5.5Z"/></svg>
+                    Start workout
+                </button>
+            </div>
+
             <div id="active-workout" style="display: none;">
                 <div class="workout-header">
                     <h3 id="current-workout-name"></h3>
                     <div class="workout-timer">
                         <span id="timer-display">00:00</span>
-                        <button id="pause-resume-btn">Pause</button>
-                        <button id="stop-workout-btn">Stop</button>
+                        <button id="pause-resume-btn" class="btn btn-ghost btn-sm">Pause</button>
+                        <button id="stop-workout-btn" class="btn btn-danger btn-sm">Stop</button>
                     </div>
                 </div>
-                
+
                 <div class="current-exercise">
-                    <h4>Current Exercise: <span id="current-exercise-name"></span></h4>
+                    <h4>Current exercise: <span id="current-exercise-name"></span></h4>
                     <div class="exercise-progress">
                         <span id="exercise-counter">1 / 5</span>
                         <div class="progress-bar">
@@ -78,26 +133,40 @@
                         </div>
                     </div>
                     <div id="current-exercise-details"></div>
-                    <button id="next-exercise-btn" class="action-btn">Complete Exercise</button>
+                    <button id="next-exercise-btn" class="btn btn-primary">
+                        Complete exercise
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+                    </button>
                 </div>
             </div>
 
             <div id="workout-complete" style="display: none;">
-                <h3>Workout Complete! 🎉</h3>
+                <span class="complete-badge" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+                </span>
+                <h3>Workout complete</h3>
                 <div class="completion-stats">
                     <p>Duration: <span id="final-duration"></span></p>
                     <p>Exercises completed: <span id="exercises-completed"></span></p>
                 </div>
-                <button id="finish-workout-btn" class="action-btn">Finish & Save Progress</button>
+                <button id="finish-workout-btn" class="btn btn-primary">Finish &amp; save progress</button>
             </div>
-        </div>
+        </section>
 
-        <div class="workout-history">
-            <h3>Workout History</h3>
+        <section class="panel workout-history" data-reveal>
+            <div class="panel-head">
+                <h3>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3.2 1.8"/></svg>
+                    Workout history
+                </h3>
+            </div>
             <div id="history-list"></div>
-        </div>
-    </div>
+        </section>
+    </main>
 
+    <footer class="app-foot">INTERACTIVE.OS · LOCAL-FIRST · <a href="../index.html">RETURN TO HUB</a></footer>
+
+    <script src="../shared/theme.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

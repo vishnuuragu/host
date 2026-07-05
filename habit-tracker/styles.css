@@ -1,110 +1,110 @@
-body {
-    position: relative; /* Ensure that the body is the reference point for positioning */
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f5f5f5;
-    color: #333;
+/* Habit Tracker — module styles (on top of ../shared/theme.css) */
+
+.habit-shell {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-
-.container {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    text-align: center;
-}
-
-h1 {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
+    flex-direction: column;
+    gap: 18px;
+    max-width: 640px;
 }
 
 .habit-form {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+    gap: 12px;
 }
-
-#habit-input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
-}
-
-#add-habit-btn {
-    background-color: #4A90E2;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    margin-left: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-}
-
-#add-habit-btn:hover {
-    background-color: #357ABD;
-}
+.habit-form input { flex: 1; }
+.habit-form .btn { flex: none; }
 
 #habit-list {
-    list-style: none;
-    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#habit-list:empty::after {
+    content: 'NO HABITS LOGGED — ADD YOUR FIRST ONE ABOVE';
+    display: block;
+    padding: 32px 20px;
+    border: 1px dashed var(--line-bright);
+    border-radius: var(--radius-sm);
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
 }
 
 .habit-item {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    background-color: #f7f7f7;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 10px;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 14px 16px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    background: rgba(8, 11, 24, 0.45);
+    cursor: pointer;
+    transition: border-color 0.25s ease, background-color 0.25s ease,
+                box-shadow 0.3s ease, transform 0.3s var(--ease-out);
 }
+.habit-item:hover {
+    border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+    background: color-mix(in srgb, var(--accent) 5%, rgba(8, 11, 24, 0.45));
+    transform: translateX(3px);
+}
+.habit-item:active { transform: scale(0.99); }
 
+/* ring indicator drawn before the habit name */
+.habit-item > span {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+.habit-item > span::before {
+    content: '';
+    width: 20px; height: 20px;
+    flex: none;
+    border-radius: 50%;
+    border: 1.5px solid var(--line-bright);
+    transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.habit-item:hover > span::before {
+    border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+}
 .habit-item.completed {
+    border-color: color-mix(in srgb, var(--accent) 28%, transparent);
+    background: color-mix(in srgb, var(--accent) 6%, rgba(8, 11, 24, 0.4));
+}
+.habit-item.completed > span {
+    color: var(--ink-3);
     text-decoration: line-through;
-    color: #aaa;
+    text-decoration-color: color-mix(in srgb, var(--accent) 55%, transparent);
+}
+.habit-item.completed > span::before {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2304060e' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5.5 12.5 4 4 9-10'/%3E%3C/svg%3E")
+        center / 12px no-repeat,
+        var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 0 14px -2px color-mix(in srgb, var(--accent) 65%, transparent);
 }
 
 .remove-btn {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
+    padding: 7px 14px;
+    border: 1px solid rgba(251, 113, 133, 0.28);
+    border-radius: 999px;
+    background: rgba(251, 113, 133, 0.06);
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--danger);
+    transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
-
 .remove-btn:hover {
-    background-color: #c0392b;
+    background: rgba(251, 113, 133, 0.14);
+    border-color: rgba(251, 113, 133, 0.55);
+    box-shadow: 0 0 18px -8px rgba(251, 113, 133, 0.6);
 }
 
-
-.back-link {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    text-decoration: none;
-    color: white;
-    background-color: #4A90E2;
-    padding: 10px 15px;
-    border-radius: 5px;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s, box-shadow 0.3s;
-}
-
-.back-link:hover {
-    background-color: #357ABD;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+@media (max-width: 480px) {
+    .habit-form { flex-direction: column; }
 }

@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add node functionality
     addNodeBtn.addEventListener('click', () => {
-        const node = createNode(`Node ${nodeIdCounter}`, '#4A90E2');
+        const node = createNode(`Node ${nodeIdCounter}`, nodeColor.value || '#a78bfa');
         nodes.push(node);
         nodeIdCounter++;
         renderMindMap();
@@ -294,10 +294,10 @@ document.addEventListener('DOMContentLoaded', function() {
         // Show feedback
         const originalText = saveMapBtn.textContent;
         saveMapBtn.textContent = 'Saved!';
-        saveMapBtn.style.backgroundColor = '#27ae60';
+        saveMapBtn.classList.add('is-saved');
         setTimeout(() => {
             saveMapBtn.textContent = originalText;
-            saveMapBtn.style.backgroundColor = '#4A90E2';
+            saveMapBtn.classList.remove('is-saved');
         }, 2000);
     });
 

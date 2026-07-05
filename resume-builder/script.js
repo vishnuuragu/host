@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Buttons
     const addExperienceBtn = document.getElementById('add-experience');
     const addEducationBtn = document.getElementById('add-education');
-    const previewBtn = document.getElementById('preview-btn');
     const downloadBtn = document.getElementById('download-btn');
     const saveBtn = document.getElementById('save-btn');
     
@@ -265,10 +264,10 @@ document.addEventListener('DOMContentLoaded', function() {
         // Show feedback
         const originalText = saveBtn.textContent;
         saveBtn.textContent = 'Saved!';
-        saveBtn.style.backgroundColor = '#27ae60';
+        saveBtn.classList.add('is-saved');
         setTimeout(() => {
             saveBtn.textContent = originalText;
-            saveBtn.style.backgroundColor = '#4A90E2';
+            saveBtn.classList.remove('is-saved');
         }, 2000);
     });
 

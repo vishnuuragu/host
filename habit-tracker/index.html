@@ -3,22 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Habit Tracker</title>
+    <meta name="description" content="Track and manage your daily habits — a self-contained vanilla JS module of interactive.os.">
+    <meta name="theme-color" content="#030409">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <title>Habit Tracker — interactive.os</title>
+    <script>document.documentElement.classList.add('js');</script>
+    <link rel="stylesheet" href="../shared/theme.css">
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body>
-    <a href="../index.html" class="back-link">Back to Home</a>
-    <div class="container">
-        <h1>Habit Tracker</h1>
-        <div class="habit-form">
-            <input type="text" id="habit-input" placeholder="Enter a new habit" />
-            <button id="add-habit-btn">Add Habit</button>
-        </div>
-        <ul id="habit-list">
-            <!-- Habit items will be dynamically added here -->
-        </ul>
-    </div>
+<body data-accent="cyan">
 
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="app-nav-wrap">
+        <nav class="app-nav" aria-label="Module">
+            <a href="../index.html" class="back-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m0 0 6 6m-6-6 6-6"/></svg>
+                <span>All modules</span>
+            </a>
+            <span class="app-nav-title">
+                <span class="glyph" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="m8.5 12.3 2.4 2.4 4.6-5.2"/></svg>
+                </span>
+                Habit Tracker
+            </span>
+            <span class="app-nav-meta" aria-hidden="true"><span class="pulse-dot"></span><span class="meta-extra">MODULE 01 / 10</span></span>
+        </nav>
+    </header>
+
+    <main class="app-main container" id="main">
+        <header class="app-head">
+            <p class="eyebrow"><span class="eyebrow-index">01</span> MODULE</p>
+            <h1>Habit <span class="holo">Tracker</span></h1>
+            <p class="app-sub">Log the routines you want to keep. Tap a habit to mark it complete — everything persists to this device.</p>
+        </header>
+
+        <div class="habit-shell">
+            <section class="panel" data-reveal>
+                <div class="habit-form">
+                    <input type="text" id="habit-input" placeholder="Enter a new habit…" aria-label="New habit" />
+                    <button id="add-habit-btn" class="btn btn-primary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                        Add habit
+                    </button>
+                </div>
+            </section>
+
+            <section class="panel" data-reveal>
+                <div class="panel-head">
+                    <h2>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m8.5 12.3 2.4 2.4 4.6-5.2"/></svg>
+                        Today's habits
+                    </h2>
+                    <p>Click a habit to toggle completion.</p>
+                </div>
+                <ul id="habit-list"></ul>
+            </section>
+        </div>
+    </main>
+
+    <footer class="app-foot">INTERACTIVE.OS · LOCAL-FIRST · <a href="../index.html">RETURN TO HUB</a></footer>
+
+    <script src="../shared/theme.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

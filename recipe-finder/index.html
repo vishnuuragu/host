@@ -3,57 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipe Finder</title>
+    <meta name="description" content="Find recipes from the ingredients you already have — a self-contained vanilla JS module of interactive.os.">
+    <meta name="theme-color" content="#030409">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <title>Recipe Finder — interactive.os</title>
+    <script>document.documentElement.classList.add('js');</script>
+    <link rel="stylesheet" href="../shared/theme.css">
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body>
-    <a href="../index.html" class="back-link">Back to Home</a>
-    <div class="container">
-        <h1>Recipe Finder</h1>
-        
-        <div class="search-section">
-            <div class="ingredients-input">
-                <h3>What ingredients do you have?</h3>
-                <input type="text" id="ingredient-input" placeholder="Add an ingredient and press Enter" />
-                <div id="ingredients-list"></div>
-            </div>
-            
-            <div class="filters">
-                <select id="cuisine-filter">
-                    <option value="">Any Cuisine</option>
-                    <option value="italian">Italian</option>
-                    <option value="mexican">Mexican</option>
-                    <option value="chinese">Chinese</option>
-                    <option value="indian">Indian</option>
-                    <option value="american">American</option>
-                </select>
-                
-                <select id="meal-type-filter">
-                    <option value="">Any Meal</option>
-                    <option value="breakfast">Breakfast</option>
-                    <option value="lunch">Lunch</option>
-                    <option value="dinner">Dinner</option>
-                    <option value="snack">Snack</option>
-                    <option value="dessert">Dessert</option>
-                </select>
-                
-                <button id="find-recipes-btn">Find Recipes</button>
-            </div>
-        </div>
+<body data-accent="magenta">
 
-        <div class="recipes-section">
-            <h3>Recipe Suggestions</h3>
-            <div id="recipes-container">
-                <p class="no-recipes">Add some ingredients and click "Find Recipes" to discover delicious recipes!</p>
-            </div>
-        </div>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-        <div class="saved-recipes">
-            <h3>Saved Recipes</h3>
-            <div id="saved-recipes-list"></div>
-        </div>
-    </div>
+    <header class="app-nav-wrap">
+        <nav class="app-nav" aria-label="Module">
+            <a href="../index.html" class="back-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m0 0 6 6m-6-6 6-6"/></svg>
+                <span>All modules</span>
+            </a>
+            <span class="app-nav-title">
+                <span class="glyph" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13a8 8 0 0 0 16 0Z"/><path d="M9.5 6.5v2.7M14.5 6.5v2.7M12 4.5v2"/></svg>
+                </span>
+                Recipe Finder
+            </span>
+            <span class="app-nav-meta" aria-hidden="true"><span class="pulse-dot"></span><span class="meta-extra">MODULE 03 / 10</span></span>
+        </nav>
+    </header>
 
+    <main class="app-main container" id="main">
+        <header class="app-head">
+            <p class="eyebrow"><span class="eyebrow-index">03</span> MODULE</p>
+            <h1>Recipe <span class="holo">Finder</span></h1>
+            <p class="app-sub">Tell the system what's in your kitchen and it matches recipes against your ingredients, cuisine, and meal type.</p>
+        </header>
+
+        <div class="recipe-shell">
+            <section class="panel" data-reveal>
+                <div class="panel-head">
+                    <h2>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg>
+                        What ingredients do you have?
+                    </h2>
+                    <p>Type an ingredient and press Enter to add it.</p>
+                </div>
+                <input type="text" id="ingredient-input" placeholder="Add an ingredient and press Enter…" aria-label="Add ingredient" />
+                <div id="ingredients-list" class="ingredients-list"></div>
+
+                <div class="filters">
+                    <select id="cuisine-filter" aria-label="Cuisine">
+                        <option value="">Any Cuisine</option>
+                        <option value="italian">Italian</option>
+                        <option value="mexican">Mexican</option>
+                        <option value="chinese">Chinese</option>
+                        <option value="indian">Indian</option>
+                        <option value="american">American</option>
+                    </select>
+
+                    <select id="meal-type-filter" aria-label="Meal type">
+                        <option value="">Any Meal</option>
+                        <option value="breakfast">Breakfast</option>
+                        <option value="lunch">Lunch</option>
+                        <option value="dinner">Dinner</option>
+                        <option value="snack">Snack</option>
+                        <option value="dessert">Dessert</option>
+                    </select>
+
+                    <button id="find-recipes-btn" class="btn btn-primary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg>
+                        Find recipes
+                    </button>
+                </div>
+            </section>
+
+            <section class="panel" data-reveal>
+                <div class="panel-head">
+                    <h3>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 13a8 8 0 0 0 16 0Z"/><path d="M9.5 6.5v2.7M14.5 6.5v2.7M12 4.5v2"/></svg>
+                        Recipe suggestions
+                    </h3>
+                </div>
+                <div id="recipes-container">
+                    <p class="no-recipes">ADD SOME INGREDIENTS AND RUN A SEARCH TO DISCOVER RECIPES</p>
+                </div>
+            </section>
+
+            <section class="panel" data-reveal>
+                <div class="panel-head">
+                    <h3>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 4h11A1.5 1.5 0 0 1 19 5.5V21l-7-4-7 4V5.5A1.5 1.5 0 0 1 6.5 4Z"/></svg>
+                        Saved recipes
+                    </h3>
+                </div>
+                <div id="saved-recipes-list"></div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="app-foot">INTERACTIVE.OS · LOCAL-FIRST · <a href="../index.html">RETURN TO HUB</a></footer>
+
+    <script src="../shared/theme.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

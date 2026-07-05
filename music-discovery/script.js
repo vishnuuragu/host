@@ -14,6 +14,11 @@ function escapeHTML(value) {
     ));
 }
 
+// Inline SVG icons for song actions (kept vector so they theme with CSS)
+const ICON_HEART = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.7-9.3-9.3C1.5 8 3.6 4.9 6.9 4.9c2 0 3.7 1.1 4.6 2.8h1c.9-1.7 2.6-2.8 4.6-2.8 3.3 0 5.4 3.1 4.2 6.3-1.8 4.6-9.3 9.3-9.3 9.3Z"/></svg>';
+const ICON_PLUS = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
+const ICON_X = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>';
+
 document.addEventListener('DOMContentLoaded', function() {
     const genreSelect = document.getElementById('genre-select');
     const moodSelect = document.getElementById('mood-select');
@@ -123,10 +128,10 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             ${showActions ? `
                 <div class="song-actions">
-                    <button class="like-btn ${isLiked ? 'liked' : ''}" data-id="${song.id}">
-                        ${isLiked ? '❤️' : '🤍'}
-                    </button>
-                    <button class="add-to-playlist-btn" data-id="${song.id}">➕</button>
+                    <button class="like-btn ${isLiked ? 'liked' : ''}" data-id="${song.id}"
+                            aria-label="Like this song" aria-pressed="${isLiked}">${ICON_HEART}</button>
+                    <button class="add-to-playlist-btn" data-id="${song.id}"
+                            aria-label="Add to playlist">${ICON_PLUS}</button>
                 </div>
             ` : ''}
         `;
@@ -148,12 +153,12 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (isCurrentlyLiked) {
             favorites = favorites.filter(fav => fav.id !== song.id);
-            buttonElement.textContent = '🤍';
             buttonElement.classList.remove('liked');
+            buttonElement.setAttribute('aria-pressed', 'false');
         } else {
             favorites.push(song);
-            buttonElement.textContent = '❤️';
             buttonElement.classList.add('liked');
+            buttonElement.setAttribute('aria-pressed', 'true');
         }
 
         localStorage.setItem('favorites', JSON.stringify(favorites));
@@ -283,7 +288,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Add remove button for favorites
             const removeBtn = document.createElement('button');
             removeBtn.className = 'remove-favorite-btn';
-            removeBtn.textContent = '❌';
+            removeBtn.setAttribute('aria-label', 'Remove from favorites');
+            removeBtn.innerHTML = ICON_X;
             removeBtn.addEventListener('click', () => {
                 favorites = favorites.filter(fav => fav.id !== song.id);
                 localStorage.setItem('favorites', JSON.stringify(favorites));
@@ -293,8 +299,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const likeButtons = document.querySelectorAll(`[data-id="${song.id}"]`);
                 likeButtons.forEach(btn => {
                     if (btn.classList.contains('like-btn')) {
-                        btn.textContent = '🤍';
                         btn.classList.remove('liked');
+                        btn.setAttribute('aria-pressed', 'false');
                     }
                 });
             });

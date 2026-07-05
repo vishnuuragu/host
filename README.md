@@ -21,16 +21,19 @@ A collection of ten small, self-contained web apps built with plain HTML, CSS, a
 
 ## Structure
 
-Every app lives in its own folder with the same three files:
+Every app lives in its own folder with the same three files, plus a shared design core that gives all ten modules the same dark, futuristic look (glass panels, aurora background, animated star field):
 
 ```
 app-name/
 ├── index.html
-├── script.js
-└── styles.css
+├── script.js        # app logic
+└── styles.css       # app-specific layout on top of the shared theme
+shared/
+├── theme.css        # design tokens, glass panels, buttons, forms, motion
+└── theme.js         # ambient background, starfield, cursor glow, reveals
 ```
 
-The repo root holds the landing page (`index.html`, `script.js`, `styles.css`), which links to each app and supports search and a dark/light theme toggle.
+The repo root holds the landing page (`index.html`, `script.js`, `styles.css`) — a dark, futuristic showcase with an animated star field, live search over the apps (press `/` to focus it), and a telemetry section charting each app's size.
 
 ## Running locally
 

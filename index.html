@@ -4,86 +4,468 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A collection of ten interactive web apps built with vanilla HTML, CSS, and JavaScript — habit tracking, to-do lists, recipes, fitness, resumes, music, mind maps, quizzes, budgets, and drawing.">
+    <meta name="theme-color" content="#030409">
     <link rel="icon" type="image/png" href="favicon.png">
     <title>Interactive Web App Ideas</title>
+    <script>document.documentElement.classList.add('js');</script>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body>
-    <header class="header">
-        <div class="header-inner">
-            <h1>Interactive Web App Ideas</h1>
-            <p class="tagline">Ten small apps, zero frameworks — pick one and dive in.</p>
-            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
-        </div>
+<body data-palette="#0891b2,#d946ef,#0d9488,#8b5cf6">
+
+    <a class="skip-link" href="#apps">Skip to modules</a>
+
+    <!-- ── Boot screen ─────────────────────────────────────────── -->
+    <div id="preloader" aria-hidden="true">
+        <svg class="pre-hex" viewBox="0 0 48 48" fill="none">
+            <defs>
+                <linearGradient id="pre-grad" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+                    <stop offset="0" stop-color="#38e1ff"/>
+                    <stop offset=".55" stop-color="#a78bfa"/>
+                    <stop offset="1" stop-color="#f472d0"/>
+                </linearGradient>
+            </defs>
+            <path d="M24 4.5 40.9 14.25v19.5L24 43.5 7.1 33.75v-19.5Z" stroke="url(#pre-grad)" stroke-width="1.5"/>
+            <circle cx="24" cy="24" r="5" fill="url(#pre-grad)"/>
+        </svg>
+        <div class="pre-word">INTERACTIVE.OS</div>
+        <div class="pre-bar"><span id="pre-fill"></span></div>
+        <div class="pre-pct" id="pre-pct">0%</div>
+    </div>
+
+    <!-- ── Ambient layers ──────────────────────────────────────── -->
+    <div class="aurora" aria-hidden="true">
+        <div class="aurora-blob aurora-a"></div>
+        <div class="aurora-blob aurora-b"></div>
+        <div class="aurora-blob aurora-c"></div>
+    </div>
+    <div class="grid-overlay" aria-hidden="true"></div>
+    <canvas id="starfield" aria-hidden="true"></canvas>
+    <div class="noise" aria-hidden="true"></div>
+    <div id="cursor-glow" aria-hidden="true"></div>
+
+    <!-- ── Floating navigation ─────────────────────────────────── -->
+    <header class="nav-wrap">
+        <nav class="nav" aria-label="Primary">
+            <a class="brand" href="#top">
+                <svg class="brand-glyph" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="brand-grad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stop-color="#38e1ff"/>
+                            <stop offset="1" stop-color="#a78bfa"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M12 2.5 20.3 7.3v9.4L12 21.5 3.7 16.7V7.3Z" stroke="url(#brand-grad)" stroke-width="1.5"/>
+                    <circle cx="12" cy="12" r="2.6" fill="url(#brand-grad)"/>
+                </svg>
+                <span class="brand-word">interactive<span class="brand-dot">.os</span></span>
+            </a>
+            <div class="nav-links">
+                <a href="#apps">Modules</a>
+                <a href="#data">Telemetry</a>
+                <a href="#how">Protocol</a>
+            </div>
+            <div class="nav-actions">
+                <a class="btn btn-ghost btn-sm" href="https://github.com/vishnuuragu/host" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2A10 10 0 0 0 8.84 21.5c.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85V21c0 .27.16.59.67.5A10 10 0 0 0 12 2Z"/></svg>
+                    <span>Source</span>
+                </a>
+                <a class="btn btn-primary btn-sm" href="#apps">Launch</a>
+            </div>
+        </nav>
     </header>
 
-    <main class="container">
-        <div class="search-wrap">
-            <input type="search" id="app-search" class="app-search"
-                   placeholder="Search apps… (e.g. budget, drawing)"
-                   aria-label="Search apps">
+    <main id="top">
+
+        <!-- ── Hero ────────────────────────────────────────────── -->
+        <section class="hero container">
+            <div class="hud-corner hud-tl" aria-hidden="true"></div>
+            <div class="hud-corner hud-tr" aria-hidden="true"></div>
+            <div class="hud-corner hud-bl" aria-hidden="true"></div>
+            <div class="hud-corner hud-br" aria-hidden="true"></div>
+            <div class="hud-meta hud-meta-l" aria-hidden="true">SYS.VANILLA // BUILD 2050</div>
+            <div class="hud-meta hud-meta-r" aria-hidden="true">10 MODULES · 0 DEPS</div>
+
+            <svg class="orbits hero-enter" viewBox="0 0 600 600" fill="none" aria-hidden="true">
+                <circle class="orbit orbit-1" cx="300" cy="300" r="220" stroke="rgba(56,225,255,.14)" stroke-width="1" stroke-dasharray="3 9"/>
+                <circle class="orbit orbit-2" cx="300" cy="300" r="286" stroke="rgba(167,139,250,.12)" stroke-width="1" stroke-dasharray="1 7"/>
+                <g class="orbit orbit-1">
+                    <circle cx="300" cy="80" r="3.5" fill="#38e1ff"/>
+                </g>
+                <g class="orbit orbit-3">
+                    <circle cx="586" cy="300" r="2.5" fill="#f472d0"/>
+                </g>
+            </svg>
+
+            <div class="hero-inner">
+                <p class="status-chip hero-enter"><span class="pulse-dot" aria-hidden="true"></span>ALL SYSTEMS OPERATIONAL — 10 MODULES ONLINE</p>
+                <h1 class="hero-title hero-enter">Interactive Web<br><span class="holo">App Ideas</span></h1>
+                <p class="hero-sub hero-enter">Ten self-contained experiments in vanilla HTML, CSS, and JavaScript.
+                   No frameworks, no build step, nothing to install — open a module and it simply runs.</p>
+                <div class="hero-actions hero-enter">
+                    <a class="btn btn-primary btn-liquid" href="#apps" data-magnetic>Explore modules
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14m0 0-6-6m6 6 6-6"/></svg>
+                    </a>
+                    <a class="btn btn-ghost" href="https://github.com/vishnuuragu/host" target="_blank" rel="noopener" data-magnetic>View source
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7m0 0H8m9 0v9"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="float-chip chip-a hero-enter" aria-hidden="true"><span class="chip-dot" style="--c:#38e1ff"></span>localStorage only</div>
+            <div class="float-chip chip-b hero-enter" aria-hidden="true"><span class="chip-dot" style="--c:#a78bfa"></span>0 dependencies</div>
+            <div class="float-chip chip-c hero-enter" aria-hidden="true"><span class="chip-dot" style="--c:#f472d0"></span>instant load</div>
+
+            <a class="scroll-cue hero-enter" href="#apps" aria-label="Scroll to modules">
+                <span class="scroll-cue-text">SCROLL</span>
+                <span class="scroll-cue-line" aria-hidden="true"></span>
+            </a>
+        </section>
+
+        <!-- ── Ticker ──────────────────────────────────────────── -->
+        <div class="ticker" aria-hidden="true">
+            <div class="ticker-inner">
+                <span>HABIT TRACKER ✦ TO-DO LIST ✦ RECIPE FINDER ✦ FITNESS PLANNER ✦ RESUME BUILDER ✦ MUSIC DISCOVERY ✦ MIND MAPPING ✦ QUIZ GENERATOR ✦ BUDGET TRACKER ✦ DRAWING APP ✦&nbsp;</span>
+                <span>HABIT TRACKER ✦ TO-DO LIST ✦ RECIPE FINDER ✦ FITNESS PLANNER ✦ RESUME BUILDER ✦ MUSIC DISCOVERY ✦ MIND MAPPING ✦ QUIZ GENERATOR ✦ BUDGET TRACKER ✦ DRAWING APP ✦&nbsp;</span>
+            </div>
         </div>
 
-        <div class="card-grid" id="card-grid">
-            <a href="habit-tracker/index.html" class="card">
-                <h2><span class="card-icon" aria-hidden="true">✅</span> Habit Tracker</h2>
-                <p>Track and manage your daily habits with ease.</p>
-            </a>
+        <!-- ── Modules ─────────────────────────────────────────── -->
+        <section class="section container" id="apps">
+            <div class="section-head" data-reveal>
+                <div class="section-head-text">
+                    <p class="eyebrow"><span class="eyebrow-index">01</span> MODULES</p>
+                    <h2>Choose your module</h2>
+                    <p class="section-sub">Every app lives in its own folder — one page, one stylesheet, one script, one shared design core.</p>
+                </div>
+                <div class="search-wrap">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg>
+                    <input type="search" id="app-search" class="app-search"
+                           placeholder="Search modules…"
+                           aria-label="Search modules">
+                    <kbd class="search-kbd" aria-hidden="true">/</kbd>
+                </div>
+            </div>
 
-            <a href="todo-list/index.html" class="card">
-                <h2><span class="card-icon" aria-hidden="true">📝</span> To-Do List App</h2>
-                <p>Organize your tasks and stay productive.</p>
-            </a>
+            <div class="card-grid" id="card-grid">
+                <a href="habit-tracker/index.html" class="card" data-accent="cyan" data-tags="productivity streaks daily" data-reveal>
+                    <div class="card-top">
+                        <span class="card-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="m8.5 12.3 2.4 2.4 4.6-5.2"/></svg>
+                        </span>
+                        <span class="card-index" aria-hidden="true">01</span>
+                    </div>
+                    <h3>Habit Tracker</h3>
+                    <p>Track and manage your daily habits with ease.</p>
+                    <span class="card-launch" aria-hidden="true">LAUNCH <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></span>
+                </a>
 
-            <a href="recipe-finder/index.html" class="card">
-                <h2><span class="card-icon" aria-hidden="true">🍳</span> Recipe Finder</h2>
-                <p>Find recipes based on the ingredients you have.</p>
-            </a>
+                <a href="todo-list/index.html" class="card" data-accent="violet" data-tags="productivity tasks priorities" data-reveal>
+                    <div class="card-top">
+                        <span class="card-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="17" height="16" rx="3"/><path d="M8 9.5h8M8 14.5h5"/></svg>
+                        </span>
+                        <span class="card-index" aria-hidden="true">02</span>
+                    </div>
+                    <h3>To-Do List</h3>
+                    <p>Organize your tasks and stay productive.</p>
+                    <span class="card-launch" aria-hidden="true">LAUNCH <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></span>
+                </a>
 
-            <a href="fitness-planner/index.html" class="card">
-                <h2><span class="card-icon" aria-hidden="true">💪</span> Fitness Planner</h2>
-                <p>Create and track personalized workout plans.</p>
-            </a>
+                <a href="recipe-finder/index.html" class="card" data-accent="magenta" data-tags="food cooking ingredients" data-reveal>
+                    <div class="card-top">
+                        <span class="card-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13a8 8 0 0 0 16 0Z"/><path d="M9.5 6.5v2.7M14.5 6.5v2.7M12 4.5v2"/></svg>
+                        </span>
+                        <span class="card-index" aria-hidden="true">03</span>
+                    </div>
+                    <h3>Recipe Finder</h3>
+                    <p>Find recipes based on the ingredients you have.</p>
+                    <span class="card-launch" aria-hidden="true">LAUNCH <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></span>
+                </a>
 
-            <a href="resume-builder/index.html" class="card">
-                <h2><span class="card-icon" aria-hidden="true">📄</span> Resume Builder</h2>
-                <p>Create a professional resume in minutes.</p>
-            </a>
+                <a href="fitness-planner/index.html" class="card" data-accent="teal" data-tags="health workouts exercise timer" data-reveal>
+                    <div class="card-top">
+                        <span class="card-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 12h3l2.8-6.5 4 13 2.7-6.5h4.5"/></svg>
+                        </span>
+                        <span class="card-index" aria-hidden="true">04</span>
+                    </div>
+                    <h3>Fitness Planner</h3>
+                    <p>Create and track personalized workout plans.</p>
+                    <span class="card-launch" aria-hidden="true">LAUNCH <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></span>
+                </a>
 
-            <a href="music-discovery/index.html" class="card">
-                <h2><span class="card-icon" aria-hidden="true">🎵</span> Music Discovery App</h2>
-                <p>Discover new music based on your tastes.</p>
-            </a>
+                <a href="resume-builder/index.html" class="card" data-accent="cyan" data-tags="career cv export print" data-reveal>
+                    <div class="card-top">
+                        <span class="card-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3.5H7.5A1.5 1.5 0 0 0 6 5v14a1.5 1.5 0 0 0 1.5 1.5h9A1.5 1.5 0 0 0 18 19V7.5Z"/><path d="M14 3.5V7.5h4M9.5 12h5M9.5 15.5h5"/></svg>
+                        </span>
+                        <span class="card-index" aria-hidden="true">05</span>
+                    </div>
+                    <h3>Resume Builder</h3>
+                    <p>Create a professional resume in minutes.</p>
+                    <span class="card-launch" aria-hidden="true">LAUNCH <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></span>
+                </a>
 
-            <a href="mind-mapping/index.html" class="card">
-                <h2><span class="card-icon" aria-hidden="true">🧠</span> Mind Mapping Tool</h2>
-                <p>Visualize and organize your ideas.</p>
-            </a>
+                <a href="music-discovery/index.html" class="card" data-accent="violet" data-tags="audio playlists songs genres" data-reveal>
+                    <div class="card-top">
+                        <span class="card-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9.5v5M10 6.5v11M14 8.5v7M18 5.5v13"/></svg>
+                        </span>
+                        <span class="card-index" aria-hidden="true">06</span>
+                    </div>
+                    <h3>Music Discovery</h3>
+                    <p>Discover new music based on your tastes.</p>
+                    <span class="card-launch" aria-hidden="true">LAUNCH <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></span>
+                </a>
 
-            <a href="quiz-generator/index.html" class="card">
-                <h2><span class="card-icon" aria-hidden="true">❓</span> Quiz Generator</h2>
-                <p>Create and take personalized quizzes.</p>
-            </a>
+                <a href="mind-mapping/index.html" class="card" data-accent="magenta" data-tags="brainstorm nodes ideas diagram" data-reveal>
+                    <div class="card-top">
+                        <span class="card-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.6"/><circle cx="5" cy="6" r="1.8"/><circle cx="19" cy="7" r="1.8"/><circle cx="7" cy="19" r="1.8"/><path d="M10.2 10.4 6.4 7.1m7.5 3.5 3.5-2.7m-6.5 5.9-3.2 3.4"/></svg>
+                        </span>
+                        <span class="card-index" aria-hidden="true">07</span>
+                    </div>
+                    <h3>Mind Mapping</h3>
+                    <p>Visualize and organize your ideas.</p>
+                    <span class="card-launch" aria-hidden="true">LAUNCH <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></span>
+                </a>
 
-            <a href="budget-tracker/index.html" class="card">
-                <h2><span class="card-icon" aria-hidden="true">💰</span> Budget Tracker</h2>
-                <p>Track your expenses and manage your budget.</p>
-            </a>
+                <a href="quiz-generator/index.html" class="card" data-accent="teal" data-tags="learning trivia questions score" data-reveal>
+                    <div class="card-top">
+                        <span class="card-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.5L3 20.5l1.5-5.6A8.5 8.5 0 1 1 21 11.5Z"/><path d="M9.9 9.3a2.3 2.3 0 0 1 4.5.7c0 1.5-2.2 1.9-2.2 3.1M12.2 16h.01"/></svg>
+                        </span>
+                        <span class="card-index" aria-hidden="true">08</span>
+                    </div>
+                    <h3>Quiz Generator</h3>
+                    <p>Create and take personalized quizzes.</p>
+                    <span class="card-launch" aria-hidden="true">LAUNCH <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></span>
+                </a>
 
-            <a href="drawing-app/index.html" class="card">
-                <h2><span class="card-icon" aria-hidden="true">🎨</span> Drawing App</h2>
-                <p>Create digital drawings with a simple interface.</p>
-            </a>
-        </div>
+                <a href="budget-tracker/index.html" class="card" data-accent="cyan" data-tags="finance money expenses csv" data-reveal>
+                    <div class="card-top">
+                        <span class="card-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.5A2.5 2.5 0 0 1 6 5h11.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H6a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M20 10.5h-4.2a1.9 1.9 0 0 0 0 3.8H20"/></svg>
+                        </span>
+                        <span class="card-index" aria-hidden="true">09</span>
+                    </div>
+                    <h3>Budget Tracker</h3>
+                    <p>Track your expenses and manage your budget.</p>
+                    <span class="card-launch" aria-hidden="true">LAUNCH <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></span>
+                </a>
 
-        <p id="no-results" class="no-results" hidden>No apps match your search.</p>
+                <a href="drawing-app/index.html" class="card" data-accent="violet" data-tags="canvas art sketch paint" data-reveal>
+                    <div class="card-top">
+                        <span class="card-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                        </span>
+                        <span class="card-index" aria-hidden="true">10</span>
+                    </div>
+                    <h3>Drawing App</h3>
+                    <p>Create digital drawings with a simple interface.</p>
+                    <span class="card-launch" aria-hidden="true">LAUNCH <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></span>
+                </a>
+            </div>
+
+            <p id="no-results" class="no-results" hidden>NO MODULES FOUND — RECALIBRATE QUERY</p>
+        </section>
+
+        <!-- ── Telemetry ───────────────────────────────────────── -->
+        <section class="section container" id="data">
+            <div class="section-head" data-reveal>
+                <div class="section-head-text">
+                    <p class="eyebrow"><span class="eyebrow-index">02</span> TELEMETRY</p>
+                    <h2>The system at a glance</h2>
+                    <p class="section-sub">Live readings from the codebase itself — every number below is measured from source.</p>
+                </div>
+            </div>
+
+            <div class="stat-row">
+                <div class="stat-tile" data-reveal>
+                    <p class="stat-label">Modules</p>
+                    <p class="stat-value"><span class="count" data-count="10">0</span></p>
+                    <p class="stat-sub">self-contained apps</p>
+                </div>
+                <div class="stat-tile" data-reveal>
+                    <p class="stat-label">Lines of code</p>
+                    <p class="stat-value"><span class="count" data-count="7145">0</span></p>
+                    <p class="stat-sub">across modules + shared core</p>
+                </div>
+                <div class="stat-tile" data-reveal>
+                    <p class="stat-label">Dependencies</p>
+                    <p class="stat-value"><span class="count" data-count="0">0</span></p>
+                    <p class="stat-sub">no frameworks, no libraries</p>
+                </div>
+                <div class="stat-tile" data-reveal>
+                    <p class="stat-label">Files per module</p>
+                    <p class="stat-value"><span class="count" data-count="3">0</span></p>
+                    <p class="stat-sub">HTML · CSS · JS</p>
+                </div>
+            </div>
+
+            <div class="chart-card" data-reveal>
+                <div class="chart-head">
+                    <h3>Lines of code per module</h3>
+                    <p>Total lines of HTML, CSS, and JavaScript in each module's source</p>
+                </div>
+                <div class="chart" id="loc-chart">
+                    <div class="chart-rows">
+                        <div class="chart-row is-max" tabindex="0" role="img" aria-label="Fitness Planner: 946 lines">
+                            <span class="chart-label">Fitness Planner</span>
+                            <span class="chart-track" style="--w:94.6%"><span class="chart-bar"></span><span class="chart-val">946</span></span>
+                        </div>
+                        <div class="chart-row" tabindex="0" role="img" aria-label="Resume Builder: 871 lines">
+                            <span class="chart-label">Resume Builder</span>
+                            <span class="chart-track" style="--w:87.1%"><span class="chart-bar"></span><span class="chart-val">871</span></span>
+                        </div>
+                        <div class="chart-row" tabindex="0" role="img" aria-label="Recipe Finder: 707 lines">
+                            <span class="chart-label">Recipe Finder</span>
+                            <span class="chart-track" style="--w:70.7%"><span class="chart-bar"></span><span class="chart-val">707</span></span>
+                        </div>
+                        <div class="chart-row" tabindex="0" role="img" aria-label="Music Discovery: 689 lines">
+                            <span class="chart-label">Music Discovery</span>
+                            <span class="chart-track" style="--w:68.9%"><span class="chart-bar"></span><span class="chart-val">689</span></span>
+                        </div>
+                        <div class="chart-row" tabindex="0" role="img" aria-label="Quiz Generator: 671 lines">
+                            <span class="chart-label">Quiz Generator</span>
+                            <span class="chart-track" style="--w:67.1%"><span class="chart-bar"></span><span class="chart-val">671</span></span>
+                        </div>
+                        <div class="chart-row" tabindex="0" role="img" aria-label="Mind Mapping: 669 lines">
+                            <span class="chart-label">Mind Mapping</span>
+                            <span class="chart-track" style="--w:66.9%"><span class="chart-bar"></span><span class="chart-val">669</span></span>
+                        </div>
+                        <div class="chart-row" tabindex="0" role="img" aria-label="Budget Tracker: 491 lines">
+                            <span class="chart-label">Budget Tracker</span>
+                            <span class="chart-track" style="--w:49.1%"><span class="chart-bar"></span><span class="chart-val">491</span></span>
+                        </div>
+                        <div class="chart-row" tabindex="0" role="img" aria-label="Drawing App: 491 lines">
+                            <span class="chart-label">Drawing App</span>
+                            <span class="chart-track" style="--w:49.1%"><span class="chart-bar"></span><span class="chart-val">491</span></span>
+                        </div>
+                        <div class="chart-row" tabindex="0" role="img" aria-label="To-Do List: 357 lines">
+                            <span class="chart-label">To-Do List</span>
+                            <span class="chart-track" style="--w:35.7%"><span class="chart-bar"></span><span class="chart-val">357</span></span>
+                        </div>
+                        <div class="chart-row" tabindex="0" role="img" aria-label="Habit Tracker: 275 lines">
+                            <span class="chart-label">Habit Tracker</span>
+                            <span class="chart-track" style="--w:27.5%"><span class="chart-bar"></span><span class="chart-val">275</span></span>
+                        </div>
+                    </div>
+                    <div class="chart-ticks" aria-hidden="true">
+                        <span></span>
+                        <span class="chart-tick-labels"><i>0</i><i>250</i><i>500</i><i>750</i><i>1,000</i></span>
+                    </div>
+                </div>
+                <table class="visually-hidden">
+                    <caption>Lines of code per module</caption>
+                    <thead><tr><th scope="col">Module</th><th scope="col">Lines of code</th></tr></thead>
+                    <tbody>
+                        <tr><td>Fitness Planner</td><td>946</td></tr>
+                        <tr><td>Resume Builder</td><td>871</td></tr>
+                        <tr><td>Recipe Finder</td><td>707</td></tr>
+                        <tr><td>Music Discovery</td><td>689</td></tr>
+                        <tr><td>Quiz Generator</td><td>671</td></tr>
+                        <tr><td>Mind Mapping</td><td>669</td></tr>
+                        <tr><td>Budget Tracker</td><td>491</td></tr>
+                        <tr><td>Drawing App</td><td>491</td></tr>
+                        <tr><td>To-Do List</td><td>357</td></tr>
+                        <tr><td>Habit Tracker</td><td>275</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ── Protocol ────────────────────────────────────────── -->
+        <section class="section container" id="how">
+            <div class="section-head" data-reveal>
+                <div class="section-head-text">
+                    <p class="eyebrow"><span class="eyebrow-index">03</span> PROTOCOL</p>
+                    <h2>How it works</h2>
+                    <p class="section-sub">Three rules govern every module in the system.</p>
+                </div>
+            </div>
+
+            <div class="protocol">
+                <svg class="protocol-line" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="line-grad" x1="0" y1="0" x2="1200" y2="0" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stop-color="#38e1ff"/>
+                            <stop offset=".5" stop-color="#a78bfa"/>
+                            <stop offset="1" stop-color="#f472d0"/>
+                        </linearGradient>
+                    </defs>
+                    <path id="protocol-path" d="M0 30 C 150 30 180 14 300 14 S 480 46 600 46 720 14 900 14 1080 30 1200 30"
+                          stroke="url(#line-grad)" stroke-width="1.5" pathLength="1"/>
+                </svg>
+                <div class="protocol-steps">
+                    <div class="protocol-step" data-reveal>
+                        <span class="protocol-node" aria-hidden="true">01</span>
+                        <h3>Pick a module</h3>
+                        <p>Each app is its own folder: one HTML file, one stylesheet, one script — drawing on a single shared design core. Nothing is bundled.</p>
+                    </div>
+                    <div class="protocol-step" data-reveal>
+                        <span class="protocol-node" aria-hidden="true">02</span>
+                        <h3>It runs instantly</h3>
+                        <p>No build step, no install, no server round-trips. The browser is the whole runtime — click a card and you're in.</p>
+                    </div>
+                    <div class="protocol-step" data-reveal>
+                        <span class="protocol-node" aria-hidden="true">03</span>
+                        <h3>Your data stays yours</h3>
+                        <p>Everything persists to localStorage on your own device. There is no backend, no account, and nothing leaves the page.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Closing CTA ─────────────────────────────────────── -->
+        <section class="section container cta-section">
+            <div class="cta-panel" data-reveal>
+                <h2>Pick a module and go.</h2>
+                <p>Everything runs in your browser, right now — no sign-up, no install, no waiting.</p>
+                <a class="btn btn-primary btn-liquid" href="#apps" data-magnetic>Explore modules</a>
+            </div>
+        </section>
     </main>
 
-    <footer>
-        <p>© <span id="year"></span> Interactive Web App Ideas. All Rights Reserved.</p>
+    <!-- ── Footer ──────────────────────────────────────────────── -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <a class="brand" href="#top">
+                    <svg class="brand-glyph" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M12 2.5 20.3 7.3v9.4L12 21.5 3.7 16.7V7.3Z" stroke="url(#brand-grad)" stroke-width="1.5"/>
+                        <circle cx="12" cy="12" r="2.6" fill="url(#brand-grad)"/>
+                    </svg>
+                    <span class="brand-word">interactive<span class="brand-dot">.os</span></span>
+                </a>
+                <p>Ten small apps, zero frameworks — handcrafted in vanilla HTML, CSS, and JavaScript.</p>
+            </div>
+            <nav class="footer-col" aria-label="Index">
+                <p class="footer-head">INDEX</p>
+                <a href="#apps">Modules</a>
+                <a href="#data">Telemetry</a>
+                <a href="#how">Protocol</a>
+            </nav>
+            <nav class="footer-col" aria-label="Elsewhere">
+                <p class="footer-head">ELSEWHERE</p>
+                <a href="https://github.com/vishnuuragu/host" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://vishnuuragu.github.io/host/" target="_blank" rel="noopener">Live site</a>
+            </nav>
+        </div>
+        <div class="container footer-bottom">
+            <p>© <span id="year"></span> Interactive Web App Ideas. All Rights Reserved.</p>
+            <p class="footer-mono">HANDCRAFTED · VANILLA · LOCAL-FIRST</p>
+        </div>
+        <div class="watermark" aria-hidden="true">INTERACTIVE</div>
     </footer>
+
+    <button id="to-top" class="to-top" aria-label="Back to top" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5m0 0-6 6m6-6 6 6"/></svg>
+    </button>
 
     <script src="script.js"></script>
 </body>

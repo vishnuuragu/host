@@ -294,10 +294,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     // Show feedback
                     e.target.textContent = 'Saved!';
-                    e.target.style.backgroundColor = '#27ae60';
+                    e.target.classList.add('is-saved');
                     setTimeout(() => {
                         e.target.textContent = 'Save Recipe';
-                        e.target.style.backgroundColor = '#4A90E2';
+                        e.target.classList.remove('is-saved');
                     }, 2000);
                 }
             });

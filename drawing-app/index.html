@@ -3,49 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drawing App</title>
+    <meta name="description" content="Sketch on a canvas with brushes, an eraser, and a local gallery — a self-contained vanilla JS module of interactive.os.">
+    <meta name="theme-color" content="#030409">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <title>Drawing App — interactive.os</title>
+    <script>document.documentElement.classList.add('js');</script>
+    <link rel="stylesheet" href="../shared/theme.css">
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body>
-    <a href="../index.html" class="back-link">Back to Home</a>
-    <div class="container">
-        <h1>Drawing App</h1>
-        
-        <div class="toolbar">
-            <div class="tool-group">
-                <label>Brush Size:</label>
-                <input type="range" id="brush-size" min="1" max="50" value="5">
-                <span id="brush-size-value">5px</span>
-            </div>
-            
-            <div class="tool-group">
-                <label>Color:</label>
-                <input type="color" id="color-picker" value="#000000">
-            </div>
-            
-            <div class="tool-group">
-                <button id="eraser-btn" class="tool-btn">Eraser</button>
-                <button id="pen-btn" class="tool-btn active">Pen</button>
-            </div>
-            
-            <div class="tool-group">
-                <button id="clear-btn" class="action-btn">Clear Canvas</button>
-                <button id="save-btn" class="action-btn">Save Drawing</button>
-            </div>
-        </div>
+<body data-accent="violet">
 
-        <div class="canvas-container">
-            <canvas id="drawing-canvas"></canvas>
-        </div>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-        <div class="saved-drawings">
-            <h3>Saved Drawings</h3>
-            <div id="saved-list">
-                <!-- Saved drawings will appear here -->
+    <header class="app-nav-wrap">
+        <nav class="app-nav" aria-label="Module">
+            <a href="../index.html" class="back-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m0 0 6 6m-6-6 6-6"/></svg>
+                <span>All modules</span>
+            </a>
+            <span class="app-nav-title">
+                <span class="glyph" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                </span>
+                Drawing App
+            </span>
+            <span class="app-nav-meta" aria-hidden="true"><span class="pulse-dot"></span><span class="meta-extra">MODULE 10 / 10</span></span>
+        </nav>
+    </header>
+
+    <main class="app-main container" id="main">
+        <header class="app-head">
+            <p class="eyebrow"><span class="eyebrow-index">10</span> MODULE</p>
+            <h1>Drawing <span class="holo">App</span></h1>
+            <p class="app-sub">A clean sheet, a brush, and an eraser. Save sketches to your local gallery and download them as PNGs.</p>
+        </header>
+
+        <section class="panel toolbar-panel" data-reveal>
+            <div class="toolbar">
+                <div class="tool-group brush-group">
+                    <label for="brush-size">Brush</label>
+                    <input type="range" id="brush-size" min="1" max="50" value="5">
+                    <span id="brush-size-value" class="brush-readout">5px</span>
+                </div>
+
+                <div class="tool-group">
+                    <label for="color-picker">Color</label>
+                    <input type="color" id="color-picker" value="#a78bfa">
+                </div>
+
+                <div class="tool-group seg" role="group" aria-label="Tool">
+                    <button id="pen-btn" class="tool-btn active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                        Pen
+                    </button>
+                    <button id="eraser-btn" class="tool-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 21-4.6-4.6a1.5 1.5 0 0 1 0-2.1L13.6 3.1a1.5 1.5 0 0 1 2.1 0L21 8.4a1.5 1.5 0 0 1 0 2.1L10.5 21H7Z"/><path d="M8.5 8.5 15 15"/></svg>
+                        Eraser
+                    </button>
+                </div>
+
+                <div class="tool-group actions-group">
+                    <button id="clear-btn" class="btn btn-danger btn-sm action-btn">Clear canvas</button>
+                    <button id="save-btn" class="btn btn-primary btn-sm action-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8l4 4v12a2 2 0 0 1-2 2Z"/><path d="M15 3v4h-4M8 13h8v8H8Z"/></svg>
+                        Save drawing
+                    </button>
+                </div>
             </div>
-        </div>
-    </div>
+        </section>
 
+        <section class="canvas-container" data-reveal>
+            <canvas id="drawing-canvas" aria-label="Drawing canvas"></canvas>
+        </section>
+
+        <section class="panel saved-drawings" data-reveal>
+            <div class="panel-head">
+                <h3>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><circle cx="9" cy="9" r="1.6"/><path d="m5 18 5-5 3 3 3.5-3.5L20.5 16"/></svg>
+                    Saved drawings
+                </h3>
+            </div>
+            <div id="saved-list"></div>
+        </section>
+    </main>
+
+    <footer class="app-foot">INTERACTIVE.OS · LOCAL-FIRST · <a href="../index.html">RETURN TO HUB</a></footer>
+
+    <script src="../shared/theme.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

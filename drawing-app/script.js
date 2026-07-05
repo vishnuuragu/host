@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Drawing state
     let isDrawing = false;
     let currentTool = 'pen';
-    let currentColor = '#000000';
+    let currentColor = colorPicker.value || '#a78bfa';
     let currentBrushSize = 5;
 
     // Load saved drawings
@@ -178,12 +178,12 @@ document.addEventListener('DOMContentLoaded', function() {
         renderSavedDrawings();
         
         // Show feedback
-        const originalText = saveBtn.textContent;
+        const originalHTML = saveBtn.innerHTML;
         saveBtn.textContent = 'Saved!';
-        saveBtn.style.backgroundColor = '#27ae60';
+        saveBtn.classList.add('is-saved');
         setTimeout(() => {
-            saveBtn.textContent = originalText;
-            saveBtn.style.backgroundColor = '#4A90E2';
+            saveBtn.innerHTML = originalHTML;
+            saveBtn.classList.remove('is-saved');
         }, 2000);
     });
 

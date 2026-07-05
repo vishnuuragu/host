@@ -3,20 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Discovery App</title>
+    <meta name="description" content="Discover songs by genre, mood, and era, then build playlists — a self-contained vanilla JS module of interactive.os.">
+    <meta name="theme-color" content="#030409">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <title>Music Discovery — interactive.os</title>
+    <script>document.documentElement.classList.add('js');</script>
+    <link rel="stylesheet" href="../shared/theme.css">
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body>
-    <a href="../index.html" class="back-link">Back to Home</a>
-    <div class="container">
-        <h1>Music Discovery App</h1>
-        
-        <div class="discovery-section">
-            <h2>Discover New Music</h2>
-            
+<body data-accent="violet">
+
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="app-nav-wrap">
+        <nav class="app-nav" aria-label="Module">
+            <a href="../index.html" class="back-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m0 0 6 6m-6-6 6-6"/></svg>
+                <span>All modules</span>
+            </a>
+            <span class="app-nav-title">
+                <span class="glyph" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9.5v5M10 6.5v11M14 8.5v7M18 5.5v13"/></svg>
+                </span>
+                Music Discovery
+            </span>
+            <span class="app-nav-meta" aria-hidden="true"><span class="pulse-dot"></span><span class="meta-extra">MODULE 06 / 10</span></span>
+        </nav>
+    </header>
+
+    <main class="app-main container" id="main">
+        <header class="app-head">
+            <p class="eyebrow"><span class="eyebrow-index">06</span> MODULE</p>
+            <h1>Music <span class="holo">Discovery</span></h1>
+            <p class="app-sub">Dial in a genre, mood, and era — the system surfaces matching tracks you can like and sort into playlists.</p>
+        </header>
+
+        <section class="panel discovery-section" data-reveal>
+            <div class="panel-head">
+                <h2>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg>
+                    Discover new music
+                </h2>
+            </div>
+
             <div class="preferences">
                 <div class="preference-group">
-                    <label>Genre:</label>
+                    <label for="genre-select">Genre</label>
                     <select id="genre-select">
                         <option value="">Any Genre</option>
                         <option value="rock">Rock</option>
@@ -29,9 +64,9 @@
                         <option value="folk">Folk</option>
                     </select>
                 </div>
-                
+
                 <div class="preference-group">
-                    <label>Mood:</label>
+                    <label for="mood-select">Mood</label>
                     <select id="mood-select">
                         <option value="">Any Mood</option>
                         <option value="energetic">Energetic</option>
@@ -41,9 +76,9 @@
                         <option value="uplifting">Uplifting</option>
                     </select>
                 </div>
-                
+
                 <div class="preference-group">
-                    <label>Era:</label>
+                    <label for="era-select">Era</label>
                     <select id="era-select">
                         <option value="">Any Era</option>
                         <option value="2020s">2020s</option>
@@ -55,37 +90,60 @@
                         <option value="60s">60s</option>
                     </select>
                 </div>
-                
-                <button id="discover-btn" class="action-btn">Discover Music</button>
-            </div>
-        </div>
 
-        <div class="recommendations-section">
-            <h3>Music Recommendations</h3>
+                <button id="discover-btn" class="btn btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9.5v5M10 6.5v11M14 8.5v7M18 5.5v13"/></svg>
+                    Discover music
+                </button>
+            </div>
+        </section>
+
+        <section class="panel recommendations-section" data-reveal>
+            <div class="panel-head">
+                <h3>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 15.3l-4.8 2.6.9-5.4L4.2 8.7l5.4-.8Z"/></svg>
+                    Recommendations
+                </h3>
+            </div>
             <div id="recommendations-list">
-                <p class="no-recommendations">Set your preferences and click "Discover Music" to find new songs!</p>
+                <p class="no-recommendations">SET YOUR PREFERENCES AND RUN DISCOVERY TO FIND NEW SONGS</p>
             </div>
-        </div>
+        </section>
 
-        <div class="playlist-section">
-            <h3>My Playlists</h3>
-            <div class="playlist-controls">
-                <input type="text" id="playlist-name" placeholder="New playlist name" />
-                <button id="create-playlist-btn" class="action-btn">Create Playlist</button>
-            </div>
-            <div id="playlists-list">
-                <p class="no-playlists">No playlists created yet.</p>
-            </div>
-        </div>
+        <div class="library-grid">
+            <section class="panel playlist-section" data-reveal>
+                <div class="panel-head">
+                    <h3>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6.5h12M4 11h12M4 15.5h6"/><circle cx="17.5" cy="16" r="2.6"/><path d="M20.1 16V9.5l-2.6.8"/></svg>
+                        My playlists
+                    </h3>
+                </div>
+                <div class="playlist-controls">
+                    <input type="text" id="playlist-name" placeholder="New playlist name…" aria-label="New playlist name" />
+                    <button id="create-playlist-btn" class="btn btn-ghost">Create</button>
+                </div>
+                <div id="playlists-list">
+                    <p class="no-playlists">NO PLAYLISTS CREATED YET</p>
+                </div>
+            </section>
 
-        <div class="favorites-section">
-            <h3>Favorite Songs</h3>
-            <div id="favorites-list">
-                <p class="no-favorites">No favorite songs yet. Like some recommendations to see them here!</p>
-            </div>
+            <section class="panel favorites-section" data-reveal>
+                <div class="panel-head">
+                    <h3>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.7-9.3-9.3C1.5 8 3.6 4.9 6.9 4.9c2 0 3.7 1.1 4.6 2.8h1c.9-1.7 2.6-2.8 4.6-2.8 3.3 0 5.4 3.1 4.2 6.3-1.8 4.6-9.3 9.3-9.3 9.3Z"/></svg>
+                        Favorite songs
+                    </h3>
+                </div>
+                <div id="favorites-list">
+                    <p class="no-favorites">NO FAVORITES YET — LIKE SOME RECOMMENDATIONS FIRST</p>
+                </div>
+            </section>
         </div>
-    </div>
+    </main>
 
+    <footer class="app-foot">INTERACTIVE.OS · LOCAL-FIRST · <a href="../index.html">RETURN TO HUB</a></footer>
+
+    <script src="../shared/theme.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

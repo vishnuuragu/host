@@ -197,10 +197,10 @@ document.addEventListener('DOMContentLoaded', function() {
         // Show feedback
         const originalText = saveWorkoutBtn.textContent;
         saveWorkoutBtn.textContent = 'Saved!';
-        saveWorkoutBtn.style.backgroundColor = '#27ae60';
+        saveWorkoutBtn.classList.add('is-saved');
         setTimeout(() => {
             saveWorkoutBtn.textContent = originalText;
-            saveWorkoutBtn.style.backgroundColor = '#4A90E2';
+            saveWorkoutBtn.classList.remove('is-saved');
         }, 2000);
     });
 
